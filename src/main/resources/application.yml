@@ -11,8 +11,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: process.env.URL
-    username: process.env.user
-    password: process.env.pw
+    username: process.env.USER
+    password: process.env.PW
 
   jpa:
     open-in-view: true
