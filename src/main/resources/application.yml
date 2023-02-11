@@ -10,9 +10,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://$DB_ENDPOINT:3306/$DB_SCHEMA
-    username: $RDS_USER_NAME
-    password: $RDS_PW
+    url: jdbc:mysql://${_DB_ENDPOINT}:3306/${_DB_SCHEMA}
+    username: ${_RDS_USER_NAME}
+    password: ${_RDS_PW}
 
   jpa:
     open-in-view: true
