@@ -10,9 +10,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${System.getenv("ENDPOINT")}:3306/${System.getenv("SCHEMA")}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: ${System.getenv("USER")}
-    password: ${System.getenv("PW")}
+    url: jdbc:mysql://${ENDPOINT}:3306/${SCHEMA}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${USER}
+    password: ${PW}
 
   jpa:
     open-in-view: true
