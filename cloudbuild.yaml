@@ -18,13 +18,13 @@
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/${{_GCP_PROJECT }}/gcollector', '.']
+    args: ['build', '-t', 'gcr.io/${{ secrets.GCP_PROJECT }}/gcollector', '.']
   # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/${{_GCP_PROJECT }}/gcollector']
+    args: ['push', 'gcr.io/${{ secrets.GCP_PROJECT }}/gcollector']
   # Deploy container image to Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['run', 'deploy', 'gcollector', '--image', 'gcr.io/${{ _GCP_PROJECT }}/gcollector', '--region', 'us-east1-b', '--platform', 'managed', '--allow-unauthenticated']
+    args: ['run', 'deploy', 'gcollector', '--image', 'gcr.io/${{ secrets.GCP_PROJECT }}/gcollector', '--region', 'us-east1-b', '--platform', 'managed', '--allow-unauthenticated']
 images:
-  - gcr.io/${{ _GCP_PROJECT }}/gcollector
+  - gcr.io/${{ secrets.GCP_PROJECT }}/gcollector
 # [END cloudbuild_run_example_builddeploy]
