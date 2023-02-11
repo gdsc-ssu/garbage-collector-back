@@ -8,11 +8,8 @@ spring:
 
 
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: process.env.URL
-    username: process.env.USER
-    password: process.env.PW
+  config:
+    import: application-dev.yml
 
   jpa:
     open-in-view: true
