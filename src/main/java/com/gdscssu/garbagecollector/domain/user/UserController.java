@@ -19,7 +19,6 @@ public class UserController {
     @GetMapping("/user")
 
     public ResponseEntity<BaseResponse>userTest(){
-        //
 
         try{
             return ResponseEntity.ok(new BaseResponse<>(SUCCESS));
