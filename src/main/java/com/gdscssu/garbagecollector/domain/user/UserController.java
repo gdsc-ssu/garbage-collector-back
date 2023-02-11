@@ -15,7 +15,6 @@ import static com.gdscssu.garbagecollector.global.BaseResponseStatus.SUCCESS;
 @RestController
 public class UserController {
 
-    //
     @GetMapping("/user")
 
     public ResponseEntity<BaseResponse>userTest(){
