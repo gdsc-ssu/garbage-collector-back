@@ -1,15 +1,15 @@
 package com.gdscssu.garbagecollector.domain.user;
 
 
-import com.gdscssu.garbagecollector.global.BaseException;
-import com.gdscssu.garbagecollector.global.BaseResponse;
+import com.gdscssu.garbagecollector.global.config.BaseException;
+import com.gdscssu.garbagecollector.global.config.BaseResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.gdscssu.garbagecollector.global.BaseResponseStatus.BAD_REQUEST;
-import static com.gdscssu.garbagecollector.global.BaseResponseStatus.SUCCESS;
+import static com.gdscssu.garbagecollector.global.config.BaseResponseStatus.BAD_REQUEST;
+import static com.gdscssu.garbagecollector.global.config.BaseResponseStatus.SUCCESS;
 
 
 @RestController

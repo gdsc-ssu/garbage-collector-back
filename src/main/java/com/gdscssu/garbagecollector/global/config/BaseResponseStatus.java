@@ -1,4 +1,4 @@
-package com.gdscssu.garbagecollector.global;
+package com.gdscssu.garbagecollector.global.config;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

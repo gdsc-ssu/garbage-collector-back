@@ -2,7 +2,8 @@ package com.gdscssu.garbagecollector.domain.trash.entity;
 
 import com.gdscssu.garbagecollector.domain.basket.entity.Basket;
 import com.gdscssu.garbagecollector.domain.user.entity.User;
-import com.gdscssu.garbagecollector.global.StatusType;
+import com.gdscssu.garbagecollector.global.config.BaseEntity;
+import com.gdscssu.garbagecollector.global.config.StatusType;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Entity
-public class Trash {
+public class Trash extends BaseEntity {
 
     @Column(name = "trashId")
     @Id
@@ -40,17 +41,6 @@ public class Trash {
     private Basket basket;
 
 
-    @Column
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @Column
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
-
-
-    @Enumerated(EnumType.STRING)
-    private StatusType status;
 
 
 }

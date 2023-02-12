@@ -1,4 +1,4 @@
-package com.gdscssu.garbagecollector.global.security;
+package com.gdscssu.garbagecollector.global.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

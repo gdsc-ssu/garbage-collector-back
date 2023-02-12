@@ -1,6 +1,6 @@
 package com.gdscssu.garbagecollector.domain.basket.entity;
 
-public enum BasketType1 {
+public enum BasketType {
     GENERAL,
     RECYCLE
 }

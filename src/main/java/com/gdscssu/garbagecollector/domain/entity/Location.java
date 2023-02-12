@@ -2,7 +2,8 @@ package com.gdscssu.garbagecollector.domain.entity;
 
 
 import com.gdscssu.garbagecollector.domain.basket.entity.Basket;
-import com.gdscssu.garbagecollector.global.StatusType;
+import com.gdscssu.garbagecollector.global.config.BaseEntity;
+import com.gdscssu.garbagecollector.global.config.StatusType;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Entity
-public class Location {
+public class Location extends BaseEntity {
 
 
     @Column(name = "locationCode")
@@ -33,15 +34,4 @@ public class Location {
     @OneToMany(mappedBy = "location")
     private List<Basket> baskets;
 
-    @Column
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @Column
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
-
-
-    @Enumerated(EnumType.STRING)
-    private StatusType status;
 }

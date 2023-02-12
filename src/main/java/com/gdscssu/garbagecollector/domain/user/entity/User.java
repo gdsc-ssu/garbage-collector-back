@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.gdscssu.garbagecollector.domain.ranking.entity.Ranking;
 import com.gdscssu.garbagecollector.domain.trash.entity.Trash;
-import com.gdscssu.garbagecollector.global.StatusType;
+import com.gdscssu.garbagecollector.global.config.BaseEntity;
+import com.gdscssu.garbagecollector.global.config.StatusType;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,20 +13,22 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
-public class User implements UserDetails {
+public class User extends BaseEntity implements UserDetails {
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
+    private String uid;
+
+    @Column
     private String nickname;
 
     @Column(nullable = false)
@@ -46,17 +49,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Trash> trashes;
 
-    @Column
-    @CreationTimestamp
-    private LocalDateTime createdAt;
 
-    @Column
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
-
-
-    @Enumerated(EnumType.STRING)
-    private StatusType status;
 
 
 

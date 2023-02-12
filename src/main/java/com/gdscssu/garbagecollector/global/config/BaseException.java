@@ -1,4 +1,4 @@
-package com.gdscssu.garbagecollector.global;
+package com.gdscssu.garbagecollector.global.config;
 
 public class BaseException extends RuntimeException {
     private final BaseResponseStatus status;

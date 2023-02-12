@@ -1,10 +1,9 @@
 package com.gdscssu.garbagecollector.domain.basket.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import com.gdscssu.garbagecollector.domain.entity.Location;
 import com.gdscssu.garbagecollector.domain.trash.entity.Trash;
-import com.gdscssu.garbagecollector.global.StatusType;
+import com.gdscssu.garbagecollector.global.config.BaseEntity;
+import com.gdscssu.garbagecollector.global.config.StatusType;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Entity
-public class Basket {
+public class Basket extends BaseEntity {
     @Column(name = "basketId")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,14 +26,16 @@ public class Basket {
     private double lng;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type1")
-    private BasketType1 type1;
+    @Column(name = "type")
+    private BasketType type;
+    @Column
+    private String location1;
+    @Column
+    private String location2;
+    @Column
+    private String location3;
 
-    @Enumerated(EnumType.STRING)
 
-    @Column(name = "type2")
-
-    private BasketType2 type2;
     @Column(nullable = false)
     private String detailAddress;
 
@@ -48,17 +49,7 @@ public class Basket {
     @JoinColumn(name = "locationCode")
     private Location location;
 
-    @Column
-    @CreationTimestamp
-    private LocalDateTime createdAt;
 
-    @Column
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
-
-
-    @Enumerated(EnumType.STRING)
-    private StatusType status;
 
 
 }
