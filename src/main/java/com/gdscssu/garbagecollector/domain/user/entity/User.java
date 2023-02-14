@@ -6,27 +6,34 @@ import com.gdscssu.garbagecollector.domain.ranking.entity.Ranking;
 import com.gdscssu.garbagecollector.domain.trash.entity.Trash;
 import com.gdscssu.garbagecollector.global.config.BaseEntity;
 import com.gdscssu.garbagecollector.global.config.StatusType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.sql.DataSource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Entity
-@NoArgsConstructor
+@Getter
+@AllArgsConstructor
 public class User extends BaseEntity implements UserDetails {
-    @JsonIgnore
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
-    private String uid;
 
     @Column
     private String nickname;
@@ -50,13 +57,27 @@ public class User extends BaseEntity implements UserDetails {
     private List<Trash> trashes;
 
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
 
+    @Builder
+    public User(String nickname,String email,String profileImg){
+        this.nickname=nickname;
+        this.email=email;
+        this.profileImg=profileImg;
+    }
 
+    public User() {
+
+    }
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -88,4 +109,6 @@ public class User extends BaseEntity implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
+
+
 }
