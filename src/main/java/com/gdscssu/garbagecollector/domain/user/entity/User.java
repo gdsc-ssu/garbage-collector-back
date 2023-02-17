@@ -2,10 +2,12 @@ package com.gdscssu.garbagecollector.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.gdscssu.garbagecollector.domain.basket.entity.UserBasketMapping;
 import com.gdscssu.garbagecollector.domain.ranking.entity.Ranking;
 import com.gdscssu.garbagecollector.domain.trash.entity.Trash;
 import com.gdscssu.garbagecollector.global.config.BaseEntity;
 import com.gdscssu.garbagecollector.global.config.StatusType;
+import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -56,6 +58,11 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Trash> trashes;
 
+    // 1(user) : N(basket)
+
+    @OneToMany(mappedBy = "user")
+    private List<UserBasketMapping>userBasketMappings=new ArrayList<>();
+
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
@@ -70,6 +77,10 @@ public class User extends BaseEntity implements UserDetails {
 
     public User() {
 
+    }
+
+    public User(Claims claims) {
+        super();
     }
 
 

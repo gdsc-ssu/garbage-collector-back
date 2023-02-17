@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+
 public class SecurityConfig  {
 
     private JwtTokenProvider jwtTokenProvider;
@@ -34,6 +34,7 @@ public class SecurityConfig  {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/user/login").permitAll()
+                //.antMatchers("/home/basket/**").permitAll()
                 .antMatchers("/user/auth/**","/user/test").permitAll()
                 .anyRequest().authenticated() // 이밖에 모든 요청은 인증이 필요
                 .and()

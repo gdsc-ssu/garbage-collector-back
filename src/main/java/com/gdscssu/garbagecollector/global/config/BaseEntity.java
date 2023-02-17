@@ -24,7 +24,7 @@ public class BaseEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @Column
+
     private Status status=Status.ACTIVE;
 
     public enum Status {

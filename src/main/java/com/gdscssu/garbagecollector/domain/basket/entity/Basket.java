@@ -4,26 +4,30 @@ import com.gdscssu.garbagecollector.domain.entity.Location;
 import com.gdscssu.garbagecollector.domain.trash.entity.Trash;
 import com.gdscssu.garbagecollector.global.config.BaseEntity;
 import com.gdscssu.garbagecollector.global.config.StatusType;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
 @Entity
+@Getter
 public class Basket extends BaseEntity {
     @Column(name = "basketId")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private double lat;
-    @Column(nullable = false)
-    private double lng;
+    @Column
+    private Double lat;
+    @Column
+    private Double lng;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
@@ -48,6 +52,11 @@ public class Basket extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "locationCode")
     private Location location;
+
+    // 1(basket) : N(user)
+
+    @OneToMany(mappedBy = "basket")
+    private List<UserBasketMapping>userBasketMappings=new ArrayList<>();
 
 
 

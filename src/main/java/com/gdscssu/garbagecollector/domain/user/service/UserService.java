@@ -47,7 +47,7 @@ public class UserService {
 
         if(googleOAuth.validateGoogleAccessToken(postLoginReq.getAccessToken()).equals(id)){
             if(userRepository.findByEmail(postLoginReq.getUserEmail()).isEmpty()){
-                System.out.println("**");
+
                 User user = User.builder().
                         email(postLoginReq.getUserEmail())
                         .nickname(postLoginReq.getUserName())
@@ -57,8 +57,9 @@ public class UserService {
                 userRepository.save(user);
 
             }
+            Authentication authentication = new UsernamePasswordAuthenticationToken(postLoginReq.getUserEmail(),null,null);
 
-            return  jwtTokenProvider.createToken(postLoginReq.getUserEmail(),postLoginReq.getUserName());
+            return  jwtTokenProvider.generateToken(authentication);
         }
         throw new BaseException(BaseResponseStatus.FAIL_LOGIN);
 
