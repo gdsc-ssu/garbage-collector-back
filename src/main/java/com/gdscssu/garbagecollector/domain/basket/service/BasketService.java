@@ -5,11 +5,12 @@ import com.gdscssu.garbagecollector.domain.basket.entity.Basket;
 import com.gdscssu.garbagecollector.domain.basket.repository.BasketRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-
+@Transactional
 public class BasketService {
 
     private final BasketRepository basketRepository;
