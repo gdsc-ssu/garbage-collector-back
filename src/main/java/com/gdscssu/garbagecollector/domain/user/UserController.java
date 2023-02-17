@@ -36,7 +36,6 @@ public class UserController {
 
     private final GoogleOAuth googleOAuth;
 
-    //
     @GetMapping("/test")
 
     public ResponseEntity<BaseResponse>userTest(){
