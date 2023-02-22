@@ -4,17 +4,14 @@ import com.gdscssu.garbagecollector.domain.user.dto.PostLoginReq;
 import com.gdscssu.garbagecollector.domain.user.dto.TokenDto;
 import com.gdscssu.garbagecollector.domain.user.entity.User;
 import com.gdscssu.garbagecollector.domain.user.repository.UserRepository;
-import com.gdscssu.garbagecollector.global.config.BaseException;
-import com.gdscssu.garbagecollector.global.config.BaseResponseStatus;
 import com.gdscssu.garbagecollector.global.config.OAuth.google.GoogleOAuth;
-import com.gdscssu.garbagecollector.global.config.OAuth.google.GoogleUser;
+import com.gdscssu.garbagecollector.global.config.error.ErrorCode;
+import com.gdscssu.garbagecollector.global.config.error.exception.BaseException;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtTokenProvider;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import com.nimbusds.jose.shaded.json.parser.JSONParser;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,7 +19,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -61,7 +57,7 @@ public class UserService {
 
             return  jwtTokenProvider.generateToken(authentication);
         }
-        throw new BaseException(BaseResponseStatus.FAIL_LOGIN);
+        throw new BaseException(ErrorCode.FAIL_LOGIN);
 
 
 
