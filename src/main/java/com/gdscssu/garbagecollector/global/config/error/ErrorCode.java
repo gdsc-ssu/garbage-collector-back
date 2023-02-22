@@ -30,6 +30,11 @@ public enum ErrorCode {
 
     FAIL_LOGIN(INTERNAL_SERVER_ERROR,500,"로그인에 실패하였습니다"),
 
+    //User
+
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND,404,"유저를 찾을 수 없습니다"),
+
+
     // GENERAL
     INVALID_HTTP_METHOD(METHOD_NOT_ALLOWED, 405, "잘못된 Http Method 요청입니다."),
     INVALID_VALUE(HttpStatus.BAD_REQUEST, 400, "잘못된 입력값입니다."),
