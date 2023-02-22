@@ -49,7 +49,7 @@ public class JwtTokenProvider {
     public static TokenDto generateToken(Authentication authentication) {
 
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION_MS);
+        Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION_MS* 100L);
 
        String accessToken=Jwts.builder()
                 .setSubject((String) authentication.getPrincipal()) // 사용자

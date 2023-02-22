@@ -15,6 +15,8 @@ import java.util.Optional;
 @EnableJpaRepositories
 public interface BasketRepository extends JpaRepository<Basket,Long> {
 
-    @Query(value = "select distinct * from Basket as b where left(b.lng,6) like left(:lng,6) and left(b.lat,5) like left(:lat,5) ",nativeQuery = true)
-    List<Basket>findBasketByLngAndLat(@Param("lng")String lng, @Param("lat")String lat);
+    @Query(value = "select distinct * from Basket as b where b.lat>=:lat1 and b.lat<=:lat2 and b.lng>=:lng1 " +
+            "and b.lng<=:lng2 ",nativeQuery = true)
+    List<Basket>findBasketByLngAndLat(@Param("lng1")Double lng1, @Param("lat1")Double lat1,
+                                      @Param("lng2")Double lng2,@Param("lat2")Double lat2);
 }
