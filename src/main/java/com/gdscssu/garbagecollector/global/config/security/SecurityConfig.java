@@ -2,6 +2,7 @@ package com.gdscssu.garbagecollector.global.config.security;
 
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtAuthenticationFilter;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtTokenProvider;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +18,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-
+@AllArgsConstructor
 public class SecurityConfig  {
 
     private JwtTokenProvider jwtTokenProvider;
-
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
 
 
@@ -33,13 +34,9 @@ public class SecurityConfig  {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //jwt 사용
                 .and()
                 .authorizeRequests()
-                .antMatchers("/user/login").permitAll()
-                //.antMatchers("/home/basket/**").permitAll()
-                .antMatchers("/user/auth/**","/user/test").permitAll()
-                .anyRequest().authenticated() // 이밖에 모든 요청은 인증이 필요
+                .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
-
 
 
 
@@ -50,7 +47,7 @@ public class SecurityConfig  {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public static PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
