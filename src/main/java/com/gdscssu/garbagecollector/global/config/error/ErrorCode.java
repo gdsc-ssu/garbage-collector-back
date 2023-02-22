@@ -15,8 +15,9 @@ public enum ErrorCode {
     FORBIDDEN(HttpStatus.FORBIDDEN,  403,"권한이 없습니다."),
     NOT_FOUND(HttpStatus.NOT_FOUND, 404,"대상을 찾을 수 없습니다."),
 
-    // [User] 로그인
+    // User
 
+    // ==login==
     TOKEN_NOT_EXIST(HttpStatus.UNAUTHORIZED, 403, "JWT Token이 존재하지 않습니다."),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED,  403,"유효하지 않은 JWT Token 입니다."),
     ACCESS_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED,  403,"만료된 Access Token 입니다."),
@@ -30,9 +31,11 @@ public enum ErrorCode {
 
     FAIL_LOGIN(INTERNAL_SERVER_ERROR,500,"로그인에 실패하였습니다"),
 
-    //User
-
     USER_NOT_FOUND(HttpStatus.NOT_FOUND,404,"유저를 찾을 수 없습니다"),
+
+
+    //Basket
+    BASKET_NOT_FOUND(HttpStatus.NOT_FOUND,404,"해당 쓰레기통이 데이터베이스에 존재하지 않습니다"),
 
 
     // GENERAL

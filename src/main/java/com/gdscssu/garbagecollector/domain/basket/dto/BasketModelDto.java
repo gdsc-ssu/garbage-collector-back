@@ -3,16 +3,15 @@ package com.gdscssu.garbagecollector.domain.basket.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class PostBasketMarkingRes {
+public class BasketModelDto {
 
     private long basketId;
-    private String lng;
-    private String lat;
+    private double lng;
+    private double lat;
 
     private String basketName;
 
