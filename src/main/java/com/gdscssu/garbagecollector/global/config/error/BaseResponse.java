@@ -15,7 +15,8 @@ import static com.gdscssu.garbagecollector.global.config.error.ErrorCode.SUCCESS
 @JsonPropertyOrder({ "code", "message", "result"})
 public class BaseResponse<T>  {
 
-    private final String message;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private  String message;
 
     private final int code;
 
@@ -26,14 +27,13 @@ public class BaseResponse<T>  {
     public BaseResponse(T result) {
 
         this.code=SUCCESS.getCode();
-        this.message = SUCCESS.getMessage();
         this.result = result;
     }
 
     public BaseResponse(JwtException e) {
 
         this.code=e.getCode();
-        this.message = SUCCESS.getMessage();
+        this.message = e.getMessage();
     }
 
     public BaseResponse(ErrorCode errorCode) {

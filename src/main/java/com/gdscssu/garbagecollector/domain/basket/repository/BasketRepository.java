@@ -19,4 +19,6 @@ public interface BasketRepository extends JpaRepository<Basket,Long> {
             "and b.lng<=:lng2 ",nativeQuery = true)
     List<Basket>findBasketByLngAndLat(@Param("lng1")Double lng1, @Param("lat1")Double lat1,
                                       @Param("lng2")Double lng2,@Param("lat2")Double lat2);
+
+    Optional<Basket> findBasketById(Long id);
 }

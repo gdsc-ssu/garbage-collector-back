@@ -1,6 +1,6 @@
 package com.gdscssu.garbagecollector.domain.basket.service;
 
-import com.gdscssu.garbagecollector.domain.basket.dto.PostBasketMarkingRes;
+import com.gdscssu.garbagecollector.domain.basket.dto.BasketModelDto;
 import com.gdscssu.garbagecollector.domain.basket.entity.Basket;
 import com.gdscssu.garbagecollector.domain.basket.repository.BasketRepository;
 import com.gdscssu.garbagecollector.domain.basket.repository.UserBasketRepository;
@@ -32,7 +32,7 @@ public class BasketService {
         this.userRepository = userRepository;
     }
 
-    public List<PostBasketMarkingRes> homeBasketMarking(double lng1,double lat1,double lng2,double lat2,String userEmail){
+    public List<BasketModelDto> homeBasketMarking(double lng1, double lat1, double lng2, double lat2, String userEmail){
 
         List<Basket> baskets= basketRepository.findBasketByLngAndLat(lng1,lat1,lng2,lat2);
         Optional<User> user =userRepository.findByEmail(userEmail);
@@ -46,13 +46,13 @@ public class BasketService {
 
 
         //System.out.println(baskets.get(0).getLocation3());
-        List<PostBasketMarkingRes> postBasketMarkingList=new ArrayList<>();
+        List<BasketModelDto> postBasketMarkingList=new ArrayList<>();
         if(baskets.size()==0){
             postBasketMarkingList.add(
-                    PostBasketMarkingRes.builder()
+                    BasketModelDto.builder()
                             .basketName("")
-                            .lng("")
-                            .lat("")
+                            .lng(0)
+                            .lat(0)
                             .userTrash(0)
                             .build());
 
@@ -63,11 +63,11 @@ public class BasketService {
 
                 int userTrash=userBasketRepository.UserBasketCount(userId,basketId);
                 postBasketMarkingList.add(
-                        PostBasketMarkingRes.builder()
+                        BasketModelDto.builder()
                                 .basketId(basket.getId())
                                 .basketName(basket.getLocation3())
-                                .lng(basket.getLng().toString())
-                                .lat(basket.getLat().toString())
+                                .lng(basket.getLng())
+                                .lat(basket.getLat())
                                 .userTrash(userTrash)
                                 .updatedAt(basket.getUpdatedAt())
                                 .build());
@@ -75,6 +75,35 @@ public class BasketService {
         }
 
         return postBasketMarkingList;
+    }
+
+    public BasketModelDto basketDetail(Long basketId,String userEmail){
+        Optional<Basket> basket=basketRepository.findBasketById(basketId);
+        Optional<User> user =userRepository.findByEmail(userEmail);
+        Long userId= 0L;
+        if(user.isPresent()){
+            userId=user.get().getId();
+        }else{
+            throw new BaseException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        if(basket.isPresent()){
+            int userTrash=userBasketRepository.UserBasketCount(userId,basketId);
+            return BasketModelDto.builder()
+                    .basketName(basket.get().getLocation3())
+                    .basketId(basketId)
+                    .userTrash(userTrash)
+                    .lat(basket.get().getLat())
+                    .lng(basket.get().getLng())
+                    .updatedAt(basket.get().getUpdatedAt())
+                    .build();
+
+
+        }else{
+            throw new BaseException(ErrorCode.BASKET_NOT_FOUND);
+
+        }
+
     }
 
 
