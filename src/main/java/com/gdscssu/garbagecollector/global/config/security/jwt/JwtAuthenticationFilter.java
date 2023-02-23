@@ -57,8 +57,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwt = getJwtFromRequest(request); //request에서 jwt 토큰을 꺼낸다.
 
         if(jwt==null){
-            errorCode=ErrorCode.TOKEN_NOT_EXIST;
-            sendErrorResponse(response,ErrorCode.TOKEN_NOT_EXIST);
+            SecurityContextHolder.getContext().setAuthentication(null);
+            filterChain.doFilter(request, response);
         }
         else  {
             try{

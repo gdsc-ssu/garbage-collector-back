@@ -35,7 +35,7 @@ public class UserService {
     public TokenDto login(PostLoginReq postLoginReq) throws BaseException, ParseException {
         // 프론트에서 받아온 유저정보와 구글 서버로 부터 요청한 정보가 일치하는지 확인한다.
         // 유저 id로 인증절차 진행 (sub)
-        //액세스 토큰을 다시 구글로 보내 구글에 저장된 사용자 정보가 담긴 응답 객체를 받아온다.
+        // 액세스 토큰을 다시 구글로 보내 구글에 저장된 사용자 정보가 담긴 응답 객체를 받아온다.
         ResponseEntity<String>res = googleOAuth.requestUserInfo(postLoginReq.getAccessToken());
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(res.getBody());
