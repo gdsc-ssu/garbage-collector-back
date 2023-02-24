@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(access = AccessLevel.PUBLIC)
-public class CollectionResponseDTO {
-    private final Long userId;
-    private final List<CollectionDTO> collections;
+public class CreateCollectionResponseDTO {
+    private final Long collectionId;
 }
