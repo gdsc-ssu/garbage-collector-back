@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 @Getter
 public class Basket extends BaseEntity {
-    @Column(name = "basketId")
+    @Column(name = "basket_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,7 +50,7 @@ public class Basket extends BaseEntity {
 
     //N:1 (Basket-Location)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "locationCode")
+    @JoinColumn(name = "location_code")
     private Location location;
 
     // 1(basket) : N(user)

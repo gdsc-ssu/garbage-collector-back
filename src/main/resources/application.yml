@@ -35,6 +35,9 @@ spring:
             client-secret: ${CLIENTSECRET}
             scope: https://www.googleapis.com/auth/userinfo.profile
 
+server:
+  port: 8071
+
 
 
 
