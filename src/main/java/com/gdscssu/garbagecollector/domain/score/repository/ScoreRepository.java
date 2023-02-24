@@ -28,4 +28,6 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
     List<GetRankingResponseDTO> getRegionRankings(@Param("locationCode") String locationCode);
 
     List<Score> findAllByUserIdOrderByUpdatedAt(@Param("userId") Long userId);
+
+    Integer countByUserIdAndBasketId(@Param("userId") Long userId, @Param("basketId") Long basketId);
 }

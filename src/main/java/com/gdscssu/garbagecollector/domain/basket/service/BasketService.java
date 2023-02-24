@@ -4,6 +4,7 @@ import com.gdscssu.garbagecollector.domain.basket.dto.BasketModelDto;
 import com.gdscssu.garbagecollector.domain.basket.entity.Basket;
 import com.gdscssu.garbagecollector.domain.basket.repository.BasketRepository;
 import com.gdscssu.garbagecollector.domain.basket.repository.UserBasketRepository;
+import com.gdscssu.garbagecollector.domain.score.repository.ScoreRepository;
 import com.gdscssu.garbagecollector.domain.user.entity.User;
 import com.gdscssu.garbagecollector.domain.user.repository.UserRepository;
 import com.gdscssu.garbagecollector.global.config.error.ErrorCode;
@@ -21,14 +22,16 @@ public class BasketService {
 
     private final BasketRepository basketRepository;
     private final UserBasketRepository userBasketRepository;
-
+    private final ScoreRepository scoreRepository;
     private final UserRepository userRepository;
 
 
-    public BasketService(BasketRepository basketRepository, UserBasketRepository userBasketRepository, UserRepository userRepository) {
-        this.basketRepository = basketRepository;
+    private Double nearbyStandard = 0.002;
 
+    public BasketService(BasketRepository basketRepository, UserBasketRepository userBasketRepository, ScoreRepository scoreRepository, UserRepository userRepository) {
+        this.basketRepository = basketRepository;
         this.userBasketRepository = userBasketRepository;
+        this.scoreRepository = scoreRepository;
         this.userRepository = userRepository;
     }
 
@@ -75,6 +78,41 @@ public class BasketService {
         }
 
         return postBasketMarkingList;
+    }
+
+    public List<BasketModelDto> listNearbyBasket(Double lat, Double lng, String userEmail) {
+        List<Basket> baskets= basketRepository.findBasketByLngAndLat(
+                lng + nearbyStandard,
+                lat + nearbyStandard,
+                lng - nearbyStandard,
+                lat - nearbyStandard
+        );
+
+        Long userId =userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND))
+                .getId();
+
+        List<BasketModelDto> nearbyBaskets = new ArrayList<>();
+        if(baskets.isEmpty())
+            throw new BaseException(ErrorCode.BASKET_NOT_FOUND);
+        else {
+            for(Basket basket : baskets) {
+                Long basketId=basket.getId();
+                int userTrash = scoreRepository.countByUserIdAndBasketId(userId, basketId);
+                nearbyBaskets.add(
+                        BasketModelDto.builder()
+                                .basketId(basket.getId())
+                                .basketName(basket.getLocation3())
+                                .lng(basket.getLng())
+                                .lat(basket.getLat())
+                                .userTrash(userTrash)
+                                .updatedAt(basket.getUpdatedAt())
+                                .build()
+                );
+            }
+        }
+
+        return nearbyBaskets;
     }
 
     public BasketModelDto basketDetail(Long basketId,String userEmail){

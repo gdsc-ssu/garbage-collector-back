@@ -10,6 +10,7 @@ import com.gdscssu.garbagecollector.global.config.OAuth.google.OAuthService;
 import com.gdscssu.garbagecollector.global.config.error.BaseResponse;
 import com.gdscssu.garbagecollector.global.config.error.exception.BaseException;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
-
-
     private final UserService userService;
     private final OAuthService oAuthService;
 
@@ -38,6 +37,8 @@ public class UserController {
     }
 
     @GetMapping("/auth/access")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ApiOperation(value = "OAuth 토큰 반환")
     public ResponseEntity<BaseResponse<GoogleOAuthToken>> callback(@RequestParam(name="code")String code) throws IOException, BaseException, ParseException {
 
         GoogleOAuthToken googleOAuthToken=oAuthService.oAuthLogin(code);
@@ -48,13 +49,13 @@ public class UserController {
 
 
     @PostMapping("/login")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "가비지 컬렉터 로그인")
     public ResponseEntity<BaseResponse<TokenDto>> login(@RequestBody PostLoginReq postLoginReq) throws ParseException {
 
         TokenDto tokenDto=userService.login(postLoginReq);
 
         System.out.println(tokenDto.getAccessToken());
         return ResponseEntity.ok(new BaseResponse<>(tokenDto));
-
-
     }
 }

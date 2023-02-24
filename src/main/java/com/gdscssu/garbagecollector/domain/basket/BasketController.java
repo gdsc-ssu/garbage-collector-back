@@ -7,8 +7,10 @@ import com.gdscssu.garbagecollector.domain.basket.service.BasketService;
 import com.gdscssu.garbagecollector.global.config.error.BaseResponse;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtAuthenticationFilter;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtTokenProvider;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/basket")
 public class BasketController {
 
     private final BasketService basketService;
@@ -28,7 +31,9 @@ public class BasketController {
 
     // [MAP] /baskets
     // 유저의 위도 경도를 받아와서 소수점 다섯번째자리까지 똑같은 데이터를 찾아서 반환해줌
-    @PostMapping("/baskets")
+    @PostMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ApiOperation(value = "특정 위치의 쓰레기 통 조회")
     public ResponseEntity<BaseResponse<List<BasketModelDto>>> homeBasketMarking(@RequestBody PostBasketMarkingReq postBasketMarkingReq, HttpServletRequest request){
 
         Double lng1= postBasketMarkingReq.getLng1();
@@ -43,7 +48,20 @@ public class BasketController {
 
     }
 
-    @GetMapping("/baskets/{basketId}")
+    @GetMapping("/nearby")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ApiOperation(value = "근처 쓰레기 통 조회")
+    public ResponseEntity<BaseResponse<List<BasketModelDto>>> listNearbyBasket(@RequestParam Double lat, @RequestParam Double lng, HttpServletRequest request) {
+        String jwtToken=jwtAuthenticationFilter.getJwtFromRequest(request);
+        String userEmail=jwtTokenProvider.getUserEmailFromJWT(jwtToken);
+        List<BasketModelDto> baskets = basketService.listNearbyBasket(lat, lng, userEmail);
+
+        return ResponseEntity.ok(new BaseResponse<>(baskets));
+    }
+
+    @GetMapping("/{basketId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ApiOperation(value = "쓰레기 통 조회")
     public ResponseEntity<BaseResponse<BasketModelDto>> homeBasketDetail(@PathVariable("basketId")Long basketID, HttpServletRequest httpRequest){
         String jwtToken=jwtAuthenticationFilter.getJwtFromRequest(httpRequest);
         String userEmail=jwtTokenProvider.getUserEmailFromJWT(jwtToken);
