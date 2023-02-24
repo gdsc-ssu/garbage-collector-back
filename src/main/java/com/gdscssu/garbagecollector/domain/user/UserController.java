@@ -10,6 +10,7 @@ import com.gdscssu.garbagecollector.global.config.OAuth.google.OAuthService;
 import com.gdscssu.garbagecollector.global.config.error.BaseResponse;
 import com.gdscssu.garbagecollector.global.config.error.exception.BaseException;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
+@Api(tags = "유저 및 로그인 API")
 public class UserController {
     private final UserService userService;
     private final OAuthService oAuthService;

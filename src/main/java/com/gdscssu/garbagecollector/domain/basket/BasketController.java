@@ -7,6 +7,7 @@ import com.gdscssu.garbagecollector.domain.basket.service.BasketService;
 import com.gdscssu.garbagecollector.global.config.error.BaseResponse;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtAuthenticationFilter;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtTokenProvider;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpRequest;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/basket")
+@Api(tags = "쓰레기 통 API")
 public class BasketController {
 
     private final BasketService basketService;
