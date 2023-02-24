@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/score")
-@Api(tags = "랭킹 API")
+@Api(tags = "스코어 API")
 public class ScoreController {
     private final ScoreService scoreService;
 
