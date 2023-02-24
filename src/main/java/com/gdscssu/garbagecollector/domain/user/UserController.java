@@ -33,6 +33,7 @@ public class UserController {
 
     // OAuth test
     @GetMapping("/auth")
+    @ApiOperation(value = "테스트테스트")
     public void socialLoginRedirect() throws IOException {
         System.out.println("auth");
         oAuthService.request();
