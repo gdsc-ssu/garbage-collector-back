@@ -1,27 +1,18 @@
 package com.gdscssu.garbagecollector.domain.user.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import com.gdscssu.garbagecollector.domain.basket.entity.UserBasketMapping;
-import com.gdscssu.garbagecollector.domain.ranking.entity.Ranking;
+import com.gdscssu.garbagecollector.domain.score.entity.Score;
 import com.gdscssu.garbagecollector.domain.trash.entity.Trash;
 import com.gdscssu.garbagecollector.global.config.BaseEntity;
-import com.gdscssu.garbagecollector.global.config.StatusType;
 import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.sql.DataSource;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -52,7 +43,7 @@ public class User extends BaseEntity implements UserDetails {
     // OneToOne(User-Ranking) User에 연관관계가 있는 형태 (N+1을 막기 위해 단방향 걸어줌)
     @OneToOne
     @JoinColumn(name = "id")
-    private Ranking ranking;
+    private Score score;
 
     // 1:N (User-Trash)
     @OneToMany(mappedBy = "user")
