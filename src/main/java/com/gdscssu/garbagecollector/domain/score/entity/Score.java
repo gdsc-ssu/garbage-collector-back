@@ -4,6 +4,7 @@ package com.gdscssu.garbagecollector.domain.score.entity;
 import com.gdscssu.garbagecollector.domain.basket.entity.Basket;
 import com.gdscssu.garbagecollector.domain.user.entity.User;
 import com.gdscssu.garbagecollector.global.config.BaseEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,5 +34,12 @@ public class Score extends BaseEntity {
     private Basket basket;
 
     @Column(name = "score")
-    private int score;
+    private Integer point;
+
+    @Builder
+    public Score(User user, Basket basket, Integer point) {
+        this.user = user;
+        this.basket = basket;
+        this.point = point;
+    }
 }

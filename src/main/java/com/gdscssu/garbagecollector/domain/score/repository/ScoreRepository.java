@@ -13,17 +13,17 @@ import java.util.List;
 @Repository
 @EnableJpaRepositories
 public interface ScoreRepository extends JpaRepository<Score, Long> {
-    @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.RankingResponseDTO(s.user.nickname, SUM(s.score)) " +
+    @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.RankingResponseDTO(s.user.nickname, SUM(s.point)) " +
             "FROM Score s " +
             "GROUP BY s.user " +
-            "ORDER BY SUM(s.score) DESC")
+            "ORDER BY SUM(s.point) DESC")
     List<RankingResponseDTO> getRankings();
 
 
-    @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.RankingResponseDTO(s.user.nickname, SUM(s.score)) " +
+    @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.RankingResponseDTO(s.user.nickname, SUM(s.point)) " +
             "FROM Score s " +
             "WHERE s.basket.location.code = :locationCode " +
             "GROUP BY s.user " +
-            "ORDER BY SUM(s.score) DESC")
+            "ORDER BY SUM(s.point) DESC")
     List<RankingResponseDTO> getRegionRankings(@Param("locationCode") String locationCode);
 }
