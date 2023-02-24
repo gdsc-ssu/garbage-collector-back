@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/collection")
-@Api(tags = "가비지 캐릭터 API")
+@Api(tags = "가비지 컬렉션 API")
 public class CollectionController {
     private final CollectionService collectionService;
 

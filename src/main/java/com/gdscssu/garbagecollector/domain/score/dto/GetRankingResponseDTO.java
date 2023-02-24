@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(access = AccessLevel.PUBLIC)
-public class RankingResponseDTO {
+public class GetRankingResponseDTO {
     private final String nickname;
     private final Long totalScore;
 }
