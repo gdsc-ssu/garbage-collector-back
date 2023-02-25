@@ -1,12 +1,10 @@
 package com.gdscssu.garbagecollector.domain.collection.entity;
 
 public enum CollectionType {
-    BATTERY,
-    GLASS,
-    CARDBOARD,
     PAPER,
-    CLOTH,
-    METAL,
+    CAN,
+    GLASS,
+    //플라스틱
     PLASTIC,
-    TRASH,
+    GENERAL
 }

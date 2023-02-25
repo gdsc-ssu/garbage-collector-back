@@ -28,21 +28,21 @@ public class User extends BaseEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name="nickname")
     private String nickname;
 
-    @Column(nullable = false)
+    @Column(name="email",nullable = false)
     private String email;
 
-    @Column
+    @Column(name="profileImg")
     private String profileImg;
 
-    @Column
+    @Column(name="refreshToken")
     private String refreshToken;
 
     // OneToOne(User-Ranking) User에 연관관계가 있는 형태 (N+1을 막기 위해 단방향 걸어줌)
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "scoreId")
     private Score score;
 
     // 1:N (User-Trash)

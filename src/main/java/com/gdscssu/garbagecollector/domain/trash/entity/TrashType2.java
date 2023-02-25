@@ -7,6 +7,6 @@ public enum TrashType2 {
     GLASS,
     //플라스틱
     PLASTIC,
-    //비닐
-    PLASTIC_WASTE
+    GENERAL
+
 }
