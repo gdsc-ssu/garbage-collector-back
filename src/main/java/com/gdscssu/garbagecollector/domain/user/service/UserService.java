@@ -1,15 +1,9 @@
 package com.gdscssu.garbagecollector.domain.user.service;
 
-import com.gdscssu.garbagecollector.domain.basket.entity.Basket;
 import com.gdscssu.garbagecollector.domain.basket.repository.BasketRepository;
-import com.gdscssu.garbagecollector.domain.trash.entity.Trash;
-import com.gdscssu.garbagecollector.domain.trash.entity.TrashType1;
-import com.gdscssu.garbagecollector.domain.trash.entity.TrashType2;
 import com.gdscssu.garbagecollector.domain.trash.repository.TrashRepository;
 import com.gdscssu.garbagecollector.domain.user.dto.PostLoginReq;
-import com.gdscssu.garbagecollector.domain.user.dto.PostUserDumpReq;
 import com.gdscssu.garbagecollector.domain.user.dto.TokenDto;
-import com.gdscssu.garbagecollector.domain.user.dto.UserModelDto;
 import com.gdscssu.garbagecollector.domain.user.entity.User;
 import com.gdscssu.garbagecollector.domain.user.repository.UserRepository;
 import com.gdscssu.garbagecollector.global.config.OAuth.google.GoogleOAuth;
@@ -27,7 +21,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -74,21 +67,5 @@ public class UserService {
 
     }
 
-    public UserModelDto userDump(PostUserDumpReq postUserDumpReq,String email){
-        TrashType1 trashType1= TrashType1.valueOf(postUserDumpReq.getTrashType1());
-        TrashType2 trashType2= TrashType2.valueOf(postUserDumpReq.getTrashType2());
-        Optional<Basket> basket=basketRepository.findBasketById(postUserDumpReq.getBasketId());
-        Optional<User> user=userRepository.findByEmail(email);
 
-        Trash trash= Trash.builder()
-                        .type1(trashType1)
-                        .type2(trashType2)
-                        .basket(basket.orElseThrow(()->new RuntimeException("쓰레기통이 존재하지 않습니다.")))
-                        .user(user.orElseThrow(()-> new RuntimeException("유저가 존재하지 않습니다.")))
-                        .build();
-        trashRepository.save(trash);
-
-        return null;
-
-    }
 }

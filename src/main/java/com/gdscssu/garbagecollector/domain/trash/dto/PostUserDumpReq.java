@@ -1,4 +1,4 @@
-package com.gdscssu.garbagecollector.domain.user.dto;
+package com.gdscssu.garbagecollector.domain.trash.dto;
 
 import lombok.Data;
 

@@ -16,4 +16,6 @@ public class UserModelDto {
     private int plastic;
     private int can;
     private int glass;
+
+    private int paper;
 }

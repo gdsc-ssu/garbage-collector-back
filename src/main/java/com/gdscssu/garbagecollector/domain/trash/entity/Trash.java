@@ -43,14 +43,20 @@ public class Trash extends BaseEntity {
     @JoinColumn(name = "basketId")
     private Basket basket;
 
+    // 1(collection) : N(trash)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="collectionId")
+    private Collection collection;
+
 
 
     @Builder
-    public Trash(TrashType1 type1,TrashType2 type2,User user,Basket basket){
+    public Trash(TrashType1 type1,TrashType2 type2,User user,Basket basket,Collection collection){
         this.type1=type1;
         this.type2=type2;
         this.user=user;
         this.basket=basket;
+        this.collection=collection;
 
     }
 
