@@ -1,4 +1,4 @@
-package com.gdscssu.garbagecollector.domain.entity;
+package com.gdscssu.garbagecollector.domain.location.entity;
 
 
 import com.gdscssu.garbagecollector.domain.basket.entity.Basket;
@@ -21,13 +21,13 @@ public class Location extends BaseEntity {
     @Id
     private String code;
 
-    @Column(nullable = false)
+    @Column(name="location1",nullable = false)
     private String location1;
 
-    @Column(nullable = false)
+    @Column(name="location2",nullable = false)
     private String location2;
 
-    @Column(nullable = false)
+    @Column(name="location3",nullable = false)
     private String location3;
 
     // 1:N (Location-Basket)

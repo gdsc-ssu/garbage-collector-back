@@ -1,5 +1,7 @@
 package com.gdscssu.garbagecollector.domain.user.service;
 
+import com.gdscssu.garbagecollector.domain.basket.repository.BasketRepository;
+import com.gdscssu.garbagecollector.domain.trash.repository.TrashRepository;
 import com.gdscssu.garbagecollector.domain.user.dto.PostLoginReq;
 import com.gdscssu.garbagecollector.domain.user.dto.TokenDto;
 import com.gdscssu.garbagecollector.domain.user.entity.User;
@@ -26,6 +28,8 @@ import javax.transaction.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final TrashRepository trashRepository;
+    private final BasketRepository basketRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -62,4 +66,6 @@ public class UserService {
 
 
     }
+
+
 }

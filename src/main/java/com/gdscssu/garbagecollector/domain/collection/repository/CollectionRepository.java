@@ -11,4 +11,6 @@ import java.util.List;
 @EnableJpaRepositories
 public interface CollectionRepository extends JpaRepository<Collection, Long> {
     List<Collection> findAllByUserId(Long userId);
+
+
 }

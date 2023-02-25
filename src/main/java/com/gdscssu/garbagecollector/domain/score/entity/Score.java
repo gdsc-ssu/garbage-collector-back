@@ -20,18 +20,18 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 public class Score extends BaseEntity {
     @Id
-    @Column(name = "scoreId")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 
     @NotNull
     @OneToOne(fetch = LAZY, cascade = ALL, orphanRemoval = true)
-    @JoinColumn(name = "basket_id")
+    @JoinColumn(name = "basketId")
     private Basket basket;
 
     @NotNull

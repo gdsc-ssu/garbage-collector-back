@@ -9,9 +9,10 @@ import com.gdscssu.garbagecollector.global.config.OAuth.google.GoogleOAuthToken;
 import com.gdscssu.garbagecollector.global.config.OAuth.google.OAuthService;
 import com.gdscssu.garbagecollector.global.config.error.BaseResponse;
 import com.gdscssu.garbagecollector.global.config.error.exception.BaseException;
+import com.gdscssu.garbagecollector.global.config.security.jwt.JwtAuthenticationFilter;
+import com.gdscssu.garbagecollector.global.config.security.jwt.JwtTokenProvider;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,13 @@ public class UserController {
     private final OAuthService oAuthService;
 
     private final GoogleOAuth googleOAuth;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @GetMapping("/test")
+    public ResponseEntity<String> test(){
+        return ResponseEntity.ok("hello");
+    }
 
 
     // OAuth test
@@ -57,4 +65,6 @@ public class UserController {
 
 
     }
+
+
 }
