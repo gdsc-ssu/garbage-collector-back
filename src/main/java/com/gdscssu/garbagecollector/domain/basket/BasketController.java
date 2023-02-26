@@ -24,7 +24,6 @@ import java.util.List;
 public class BasketController {
 
     private final BasketService basketService;
-
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     private final JwtTokenProvider jwtTokenProvider;
