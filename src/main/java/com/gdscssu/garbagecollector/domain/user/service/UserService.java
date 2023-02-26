@@ -83,6 +83,8 @@ public class UserService {
                     .paper(paper)
                     .accessToken(tokenDto.getAccessToken())
                     .refreshToken(tokenDto.getRefreshToken())
+                    .createdAt(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getCreatedAt())
+                    .updatedAt(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getUpdatedAt())
                     .build();
 
             return postLoginRes;
@@ -111,6 +113,8 @@ public class UserService {
                 .plastic(plastic)
                 .glass(glass)
                 .paper(paper)
+                .createdAt(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getCreatedAt())
+                .updatedAt(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getUpdatedAt())
                 .build();
 
         return userModelDto;
