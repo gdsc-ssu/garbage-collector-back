@@ -2,6 +2,7 @@ package com.gdscssu.garbagecollector.domain.user;
 
 
 import com.gdscssu.garbagecollector.domain.user.dto.PostLoginReq;
+import com.gdscssu.garbagecollector.domain.user.dto.PostLoginRes;
 import com.gdscssu.garbagecollector.domain.user.dto.TokenDto;
 import com.gdscssu.garbagecollector.domain.user.dto.UserModelDto;
 import com.gdscssu.garbagecollector.domain.user.service.UserService;
@@ -57,12 +58,12 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<BaseResponse<TokenDto>> login(@RequestBody PostLoginReq postLoginReq) throws ParseException {
+    public ResponseEntity<BaseResponse<PostLoginRes>> login(@RequestBody PostLoginReq postLoginReq) throws ParseException {
 
-        TokenDto tokenDto=userService.login(postLoginReq);
+        PostLoginRes postLoginRes =userService.login(postLoginReq);
 
-        System.out.println(tokenDto.getAccessToken());
-        return ResponseEntity.ok(new BaseResponse<>(tokenDto));
+
+        return ResponseEntity.ok(new BaseResponse<>(postLoginRes));
 
 
     }
