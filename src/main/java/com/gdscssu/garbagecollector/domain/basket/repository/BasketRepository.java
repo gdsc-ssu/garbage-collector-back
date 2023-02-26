@@ -1,6 +1,7 @@
 package com.gdscssu.garbagecollector.domain.basket.repository;
 
 import com.gdscssu.garbagecollector.domain.basket.entity.Basket;
+import com.gdscssu.garbagecollector.domain.basket.entity.BasketType;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +22,7 @@ public interface BasketRepository extends JpaRepository<Basket,Long> {
                                       @Param("lng2")Double lng2,@Param("lat2")Double lat2);
 
     Optional<Basket> findBasketById(Long id);
+
+    @Query(value = "select distinct * from Basket as b where ROUND(b.lng,3) like ROUND(:lng,3) and ROUND(b.lat,3) like ROUND(:lat,3) and b.type like :type",nativeQuery = true)
+    List<Basket>basketRecommendList(@Param("lng")Double lng, @Param("lat")Double lat,@Param("type")String type);
 }

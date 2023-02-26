@@ -4,6 +4,7 @@ import com.gdscssu.garbagecollector.domain.basket.repository.BasketRepository;
 import com.gdscssu.garbagecollector.domain.trash.repository.TrashRepository;
 import com.gdscssu.garbagecollector.domain.user.dto.PostLoginReq;
 import com.gdscssu.garbagecollector.domain.user.dto.TokenDto;
+import com.gdscssu.garbagecollector.domain.user.dto.UserModelDto;
 import com.gdscssu.garbagecollector.domain.user.entity.User;
 import com.gdscssu.garbagecollector.domain.user.repository.UserRepository;
 import com.gdscssu.garbagecollector.global.config.OAuth.google.GoogleOAuth;
@@ -21,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -64,6 +66,30 @@ public class UserService {
         throw new BaseException(ErrorCode.FAIL_LOGIN);
 
 
+
+    }
+
+    public UserModelDto getUserInfo(Long userId){
+        Optional<User>user=userRepository.findById(userId);
+        int can= trashRepository.findCanCount(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getId());
+        int general=trashRepository.findGeneralCount(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getId());
+        int plastic=trashRepository.findPlasticCount(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getId());
+        int glass=trashRepository.findGlassCount(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getId());
+        int paper=trashRepository.findPaperCount(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getId());
+
+        UserModelDto userModelDto=UserModelDto.builder()
+                .id(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getId())
+                .email(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getEmail())
+                .nickname(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getNickname())
+                .profileUrl(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getProfileImg())
+                .can(can)
+                .general(general)
+                .plastic(plastic)
+                .glass(glass)
+                .paper(paper)
+                .build();
+
+        return userModelDto;
 
     }
 

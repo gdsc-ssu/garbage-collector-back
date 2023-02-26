@@ -3,6 +3,7 @@ package com.gdscssu.garbagecollector.domain.user;
 
 import com.gdscssu.garbagecollector.domain.user.dto.PostLoginReq;
 import com.gdscssu.garbagecollector.domain.user.dto.TokenDto;
+import com.gdscssu.garbagecollector.domain.user.dto.UserModelDto;
 import com.gdscssu.garbagecollector.domain.user.service.UserService;
 import com.gdscssu.garbagecollector.global.config.OAuth.google.GoogleOAuth;
 import com.gdscssu.garbagecollector.global.config.OAuth.google.GoogleOAuthToken;
@@ -64,6 +65,12 @@ public class UserController {
         return ResponseEntity.ok(new BaseResponse<>(tokenDto));
 
 
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<BaseResponse<UserModelDto>>getUserInfo(@PathVariable("userId")Long userId){
+        UserModelDto userModelDto=userService.getUserInfo(userId);
+        return ResponseEntity.ok(new BaseResponse<>(userModelDto));
     }
 
 

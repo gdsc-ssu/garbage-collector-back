@@ -1,6 +1,5 @@
 package com.gdscssu.garbagecollector.domain.user.entity;
 
-import com.gdscssu.garbagecollector.domain.basket.entity.UserBasketMapping;
 import com.gdscssu.garbagecollector.domain.score.entity.Score;
 import com.gdscssu.garbagecollector.domain.trash.entity.Trash;
 import com.gdscssu.garbagecollector.global.config.BaseEntity;
@@ -49,10 +48,7 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Trash> trashes;
 
-    // 1(user) : N(basket)
 
-    @OneToMany(mappedBy = "user")
-    private List<UserBasketMapping>userBasketMappings=new ArrayList<>();
 
 
     @ElementCollection(fetch = FetchType.EAGER)

@@ -1,9 +1,15 @@
 package com.gdscssu.garbagecollector.domain.basket.service;
 
 import com.gdscssu.garbagecollector.domain.basket.dto.BasketModelDto;
+import com.gdscssu.garbagecollector.domain.basket.dto.BasketRecommendDto;
+import com.gdscssu.garbagecollector.domain.basket.dto.BasketReportDto;
 import com.gdscssu.garbagecollector.domain.basket.entity.Basket;
+import com.gdscssu.garbagecollector.domain.basket.entity.BasketType;
+import com.gdscssu.garbagecollector.domain.basket.entity.Report;
+import com.gdscssu.garbagecollector.domain.basket.entity.ReportType;
+import com.gdscssu.garbagecollector.domain.basket.repository.BasketReportRepository;
 import com.gdscssu.garbagecollector.domain.basket.repository.BasketRepository;
-import com.gdscssu.garbagecollector.domain.basket.repository.UserBasketRepository;
+import com.gdscssu.garbagecollector.domain.trash.repository.TrashRepository;
 import com.gdscssu.garbagecollector.domain.user.entity.User;
 import com.gdscssu.garbagecollector.domain.user.repository.UserRepository;
 import com.gdscssu.garbagecollector.global.config.error.ErrorCode;
@@ -11,24 +17,27 @@ import com.gdscssu.garbagecollector.global.config.error.exception.BaseException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class BasketService {
 
     private final BasketRepository basketRepository;
-    private final UserBasketRepository userBasketRepository;
+    private final TrashRepository trashRepository;
+    private final BasketReportRepository basketReportRepository;
 
     private final UserRepository userRepository;
 
 
-    public BasketService(BasketRepository basketRepository, UserBasketRepository userBasketRepository, UserRepository userRepository) {
+    public BasketService(BasketRepository basketRepository, TrashRepository trashRepository, BasketReportRepository basketReportRepository, UserRepository userRepository) {
         this.basketRepository = basketRepository;
-
-        this.userBasketRepository = userBasketRepository;
+        this.trashRepository = trashRepository;
+        this.basketReportRepository = basketReportRepository;
         this.userRepository = userRepository;
     }
 
@@ -61,7 +70,7 @@ public class BasketService {
             for(Basket basket :baskets){
                 Long basketId=basket.getId();
 
-                int userTrash=userBasketRepository.UserBasketCount(userId,basketId);
+                int userTrash=trashRepository.UserBasketCount(userId,basketId);
                 postBasketMarkingList.add(
                         BasketModelDto.builder()
                                 .basketId(basket.getId())
@@ -88,7 +97,7 @@ public class BasketService {
         }
 
         if(basket.isPresent()){
-            int userTrash=userBasketRepository.UserBasketCount(userId,basketId);
+            int userTrash=trashRepository.UserBasketCount(userId,basketId);
             return BasketModelDto.builder()
                     .basketName(basket.get().getLocation3())
                     .basketId(basketId)
@@ -104,6 +113,34 @@ public class BasketService {
 
         }
 
+    }
+
+    public List<BasketModelDto> basketRecommend(BasketRecommendDto basketRecommendDto){
+        Double lng= basketRecommendDto.getLng();
+        Double lat= basketRecommendDto.getLat();
+        String type=basketRecommendDto.getType();
+        List<Basket> basketList= basketRepository.basketRecommendList(lng,lat,type);
+        List<BasketModelDto> basketModelDtoList=basketList.stream().map(
+                basket -> BasketModelDto.builder()
+                        .basketName(basket.getLocation3())
+                        .lat(basket.getLat())
+                        .lng(basket.getLng())
+                        .basketId(basket.getId())
+                        .updatedAt(basket.getUpdatedAt())
+                        .build()
+        ).collect(Collectors.toList());
+        return  basketModelDtoList;
+
+    }
+
+    public Long basketReport(BasketReportDto basketReportDto){
+        ReportType reportType= ReportType.valueOf(basketReportDto.getReportType());
+        Optional<Basket> basket=basketRepository.findBasketById(basketReportDto.getBasketId());
+        Report report=basketReportRepository.save(Report.builder()
+                .reportType(reportType)
+                .basket(basket.orElseThrow(()->new RuntimeException("쓰레기통이 존재하지 않습니다.")))
+                .build());
+        return report.getId();
     }
 
 
