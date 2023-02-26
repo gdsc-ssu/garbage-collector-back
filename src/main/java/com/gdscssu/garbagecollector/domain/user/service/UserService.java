@@ -48,18 +48,18 @@ public class UserService {
         String id= (String) jsonObject.get("id");
 
         if(googleOAuth.validateGoogleAccessToken(postLoginReq.getAccessToken()).equals(id)){
-            if(userRepository.findByEmail(postLoginReq.getUserEmail()).isEmpty()){
+            if(userRepository.findByEmail(postLoginReq.getEmail()).isEmpty()){
 
                 User user = User.builder().
-                        email(postLoginReq.getUserEmail())
-                        .nickname(postLoginReq.getUserName())
-                        .profileImg(postLoginReq.getUserProfileImg())
+                        email(postLoginReq.getEmail())
+                        .nickname(postLoginReq.getNickName())
+                        .profileImg(postLoginReq.getProfileImg())
                         .build();
 
                 userRepository.save(user);
 
             }
-            Authentication authentication = new UsernamePasswordAuthenticationToken(postLoginReq.getUserEmail(),null,null);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(postLoginReq.getEmail(),null,null);
 
             return  jwtTokenProvider.generateToken(authentication);
         }

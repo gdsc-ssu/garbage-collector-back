@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class PostLoginReq {
 
-    private String userName;
-    private String userEmail;
-    private String userProfileImg;
+    private String nickName;
+    private String email;
+    private String profileImg;
     private String accessToken;
 }
