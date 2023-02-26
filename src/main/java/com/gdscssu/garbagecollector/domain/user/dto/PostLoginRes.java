@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class PostLoginRes {
     private Long id;
-    private String profileUrl;
+    private String profileImg;
     private String nickname;
 
     private String email;

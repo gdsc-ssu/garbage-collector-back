@@ -75,7 +75,7 @@ public class UserService {
                     .id(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getId())
                     .email(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getEmail())
                     .nickname(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getNickname())
-                    .profileUrl(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getProfileImg())
+                    .profileImg(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getProfileImg())
                     .can(can)
                     .general(general)
                     .plastic(plastic)
