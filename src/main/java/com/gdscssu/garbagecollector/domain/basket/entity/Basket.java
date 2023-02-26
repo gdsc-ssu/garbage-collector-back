@@ -48,10 +48,11 @@ public class Basket extends BaseEntity {
     @JoinColumn(name = "locationCode")
     private Location location;
 
-    // 1(basket) : N(user)
+    // N(report) : 1(basket)
 
     @OneToMany(mappedBy = "basket")
-    private List<UserBasketMapping>userBasketMappings=new ArrayList<>();
+    private List<Report> reportList;
+
 
 
 

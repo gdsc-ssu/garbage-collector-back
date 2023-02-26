@@ -1,8 +1,11 @@
 package com.gdscssu.garbagecollector.domain.basket;
 
 
+import com.gdscssu.garbagecollector.domain.basket.dto.BasketRecommendDto;
+import com.gdscssu.garbagecollector.domain.basket.dto.BasketReportDto;
 import com.gdscssu.garbagecollector.domain.basket.dto.PostBasketMarkingReq;
 import com.gdscssu.garbagecollector.domain.basket.dto.BasketModelDto;
+import com.gdscssu.garbagecollector.domain.basket.entity.Basket;
 import com.gdscssu.garbagecollector.domain.basket.service.BasketService;
 import com.gdscssu.garbagecollector.global.config.error.BaseResponse;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtAuthenticationFilter;
@@ -52,4 +55,26 @@ public class BasketController {
         return ResponseEntity.ok(new BaseResponse<>(basketModelDto));
 
     }
+
+    @PostMapping("/basket/report")
+    public ResponseEntity<BaseResponse<Long>> basketReport(@RequestBody BasketReportDto basketReportDto){
+
+        Long id=basketService.basketReport(basketReportDto);
+
+
+        return ResponseEntity.ok(new BaseResponse<>(id));
+
+    }
+
+    @GetMapping("/basket/recommend")
+    public ResponseEntity<BaseResponse<List<BasketModelDto>>> basketRecommend(@RequestBody BasketRecommendDto basketRecommendDto){
+
+        List<BasketModelDto> basketModelDtoList=basketService.basketRecommend(basketRecommendDto);
+
+
+        return ResponseEntity.ok(new BaseResponse<>(basketModelDtoList));
+
+    }
+
+
 }

@@ -24,4 +24,7 @@ public interface TrashRepository extends JpaRepository<Trash,Long> {
     @Query("select count(type2) from Trash where type2='GENERAL' and user.id=:userId")
     int findGeneralCount(@Param("userId")Long userId);
 
+    @Query("select count(*) from Trash t where t.basket.id=:basketId and t.user.id=:userId")
+    int UserBasketCount(@Param("userId")Long userId, @Param("basketId")Long basketId);
+
 }
