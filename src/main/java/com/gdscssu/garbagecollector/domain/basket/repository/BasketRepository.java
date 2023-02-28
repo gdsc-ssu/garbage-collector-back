@@ -23,6 +23,6 @@ public interface BasketRepository extends JpaRepository<Basket,Long> {
 
     Optional<Basket> findBasketById(Long id);
 
-    @Query(value = "select distinct * from Basket as b where ROUND(b.lng,3) like ROUND(:lng,3) and ROUND(b.lat,3) like ROUND(:lat,3) and b.type like :type",nativeQuery = true)
+    @Query(value = "select distinct * from Basket as b where ROUND(b.lng,2) like ROUND(:lng,2) and ROUND(b.lat,2) like ROUND(:lat,2) and b.type like :type",nativeQuery = true)
     List<Basket>basketRecommendList(@Param("lng")Double lng, @Param("lat")Double lat,@Param("type")String type);
 }
