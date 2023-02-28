@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 public class BasketModelDto {
 
-    private long basketId;
+    private long id;
     private double lng;
     private double lat;
 

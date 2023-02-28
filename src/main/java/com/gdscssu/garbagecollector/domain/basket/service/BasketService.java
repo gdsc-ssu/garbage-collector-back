@@ -73,7 +73,7 @@ public class BasketService {
                 int userTrash=trashRepository.UserBasketCount(userId,basketId);
                 postBasketMarkingList.add(
                         BasketModelDto.builder()
-                                .basketId(basket.getId())
+                                .id(basket.getId())
                                 .basketName(basket.getLocation3())
                                 .lng(basket.getLng())
                                 .lat(basket.getLat())
@@ -100,7 +100,7 @@ public class BasketService {
             int userTrash=trashRepository.UserBasketCount(userId,basketId);
             return BasketModelDto.builder()
                     .basketName(basket.get().getLocation3())
-                    .basketId(basketId)
+                    .id(basketId)
                     .userTrash(userTrash)
                     .lat(basket.get().getLat())
                     .lng(basket.get().getLng())
@@ -126,7 +126,7 @@ public class BasketService {
                         .lat(basket.getLat())
                         .lng(basket.getLng())
                         .detailAddress(basket.getLocation3())
-                        .basketId(basket.getId())
+                        .id(basket.getId())
                         .updatedAt(basket.getUpdatedAt())
                         .build()
         ).collect(Collectors.toList());
