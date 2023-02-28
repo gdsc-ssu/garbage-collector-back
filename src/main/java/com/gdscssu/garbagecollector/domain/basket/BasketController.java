@@ -65,7 +65,7 @@ public class BasketController {
 
     }
 
-    @GetMapping("/basket/recommend")
+    @PostMapping("/basket/recommend")
     public ResponseEntity<BaseResponse<List<BasketModelDto>>> basketRecommend(@RequestBody BasketRecommendDto basketRecommendDto){
 
         List<BasketModelDto> basketModelDtoList=basketService.basketRecommend(basketRecommendDto);
