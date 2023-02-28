@@ -16,6 +16,8 @@ public class BasketModelDto {
 
     private String basketName;
 
+    private String detailAddress;
+
     //유저가 해당 쓰레기통에서 쓰레기를 버린 횟수
     private Integer userTrash;
 

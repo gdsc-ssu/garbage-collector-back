@@ -122,9 +122,10 @@ public class BasketService {
         List<Basket> basketList= basketRepository.basketRecommendList(lng,lat,type);
         List<BasketModelDto> basketModelDtoList=basketList.stream().map(
                 basket -> BasketModelDto.builder()
-                        .basketName(basket.getLocation3())
+                        .basketName(basket.getDetailAddress())
                         .lat(basket.getLat())
                         .lng(basket.getLng())
+                        .detailAddress(basket.getLocation3())
                         .basketId(basket.getId())
                         .updatedAt(basket.getUpdatedAt())
                         .build()
