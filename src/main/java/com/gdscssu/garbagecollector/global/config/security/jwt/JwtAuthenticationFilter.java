@@ -42,9 +42,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         request.getMethod();
         AntPathMatcher pathMatcher = new AntPathMatcher();
         return (
-                (pathMatcher.match("/user/auth", path) && request.getMethod().equals("GET")) ||
-                        (pathMatcher.match("/user/auth/access", path) && request.getMethod().equals("GET")) ||
-                        (pathMatcher.match("/user/login",path) &&request.getMethod().equals("POST")));
+                pathMatcher.match("/baskets", path) && request.getMethod().equals("POST") ||
+                pathMatcher.match("/user/auth2", path) && request.getMethod().equals("GET") ||
+                        pathMatcher.match("/user/auth/access", path) && request.getMethod().equals("GET") ||
+                        pathMatcher.match("/user/login",path) &&request.getMethod().equals("POST")||
+                pathMatcher.match("/baskets/{basketId}",path) &&request.getMethod().equals("GET")
+
+        );
     }
 
 

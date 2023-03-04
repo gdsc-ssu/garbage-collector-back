@@ -31,25 +31,23 @@ public class BasketController {
     // [MAP] /baskets
     // 유저의 위도 경도를 받아와서 소수점 다섯번째자리까지 똑같은 데이터를 찾아서 반환해줌
     @PostMapping("/baskets")
-    public ResponseEntity<BaseResponse<List<BasketModelDto>>> homeBasketMarking(@RequestBody PostBasketMarkingReq postBasketMarkingReq, HttpServletRequest request){
+    public ResponseEntity<BaseResponse<List<BasketModelDto>>> homeBasketMarking(@RequestBody PostBasketMarkingReq postBasketMarkingReq){
 
         Double lng1= postBasketMarkingReq.getLng1();
         Double lat1=postBasketMarkingReq.getLat1();
         Double lng2=postBasketMarkingReq.getLng2();
         Double lat2=postBasketMarkingReq.getLat2();
-        String jwtToken=jwtAuthenticationFilter.getJwtFromRequest(request);
-        String userEmail=jwtTokenProvider.getUserEmailFromJWT(jwtToken);
-        List<BasketModelDto> postBasketMarkingResList=basketService.homeBasketMarking(lng1,lat1,lng2,lat2,userEmail);
+
+        List<BasketModelDto> postBasketMarkingResList=basketService.homeBasketMarking(lng1,lat1,lng2,lat2);
 
         return ResponseEntity.ok(new BaseResponse<>(postBasketMarkingResList));
 
     }
 
     @GetMapping("/baskets/{basketId}")
-    public ResponseEntity<BaseResponse<BasketModelDto>> homeBasketDetail(@PathVariable("basketId")Long basketID, HttpServletRequest httpRequest){
-        String jwtToken=jwtAuthenticationFilter.getJwtFromRequest(httpRequest);
-        String userEmail=jwtTokenProvider.getUserEmailFromJWT(jwtToken);
-        BasketModelDto basketModelDto=basketService.basketDetail(basketID,userEmail);
+    public ResponseEntity<BaseResponse<BasketModelDto>> homeBasketDetail(@PathVariable("basketId")Long basketID){
+
+        BasketModelDto basketModelDto=basketService.basketDetail(basketID);
 
         return ResponseEntity.ok(new BaseResponse<>(basketModelDto));
 

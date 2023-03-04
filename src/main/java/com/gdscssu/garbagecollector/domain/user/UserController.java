@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 
@@ -41,7 +42,7 @@ public class UserController {
 
 
     // OAuth test
-    @GetMapping("/auth")
+    @GetMapping("/auth2")
     public void socialLoginRedirect() throws IOException {
         System.out.println("auth");
         oAuthService.request();
@@ -71,6 +72,15 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<BaseResponse<UserModelDto>>getUserInfo(@PathVariable("userId")Long userId){
         UserModelDto userModelDto=userService.getUserInfo(userId);
+        return ResponseEntity.ok(new BaseResponse<>(userModelDto));
+    }
+
+    // 헤더에 accessToken으로 유저정보 추출
+    @GetMapping("/auth")
+    public ResponseEntity<BaseResponse<UserModelDto>>getUserInfoByAccessToken(HttpServletRequest request){
+        String jwtToken=jwtAuthenticationFilter.getJwtFromRequest(request);
+        String userEmail=jwtTokenProvider.getUserEmailFromJWT(jwtToken);
+        UserModelDto userModelDto=userService.getUserInfoByAccessToken(userEmail);
         return ResponseEntity.ok(new BaseResponse<>(userModelDto));
     }
 

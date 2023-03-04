@@ -18,8 +18,6 @@ public class BasketModelDto {
 
     private String detailAddress;
 
-    //유저가 해당 쓰레기통에서 쓰레기를 버린 횟수
-    private Integer userTrash;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime updatedAt;

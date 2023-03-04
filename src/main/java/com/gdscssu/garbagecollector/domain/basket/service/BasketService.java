@@ -41,16 +41,9 @@ public class BasketService {
         this.userRepository = userRepository;
     }
 
-    public List<BasketModelDto> homeBasketMarking(double lng1, double lat1, double lng2, double lat2, String userEmail){
+    public List<BasketModelDto> homeBasketMarking(double lng1, double lat1, double lng2, double lat2){
 
         List<Basket> baskets= basketRepository.findBasketByLngAndLat(lng1,lat1,lng2,lat2);
-        Optional<User> user =userRepository.findByEmail(userEmail);
-        Long userId= 0L;
-        if(user.isPresent()){
-            userId=user.get().getId();
-        }else{
-            throw new BaseException(ErrorCode.USER_NOT_FOUND);
-        }
 
 
 
@@ -62,7 +55,6 @@ public class BasketService {
                             .basketName("")
                             .lng(0)
                             .lat(0)
-                            .userTrash(0)
                             .build());
 
 
@@ -70,14 +62,14 @@ public class BasketService {
             for(Basket basket :baskets){
                 Long basketId=basket.getId();
 
-                int userTrash=trashRepository.UserBasketCount(userId,basketId);
+
                 postBasketMarkingList.add(
                         BasketModelDto.builder()
                                 .id(basket.getId())
                                 .basketName(basket.getLocation3())
                                 .lng(basket.getLng())
                                 .lat(basket.getLat())
-                                .userTrash(userTrash)
+                                .detailAddress(basket.getDetailAddress())
                                 .updatedAt(basket.getUpdatedAt())
                                 .build());
             }
@@ -86,22 +78,17 @@ public class BasketService {
         return postBasketMarkingList;
     }
 
-    public BasketModelDto basketDetail(Long basketId,String userEmail){
+    public BasketModelDto basketDetail(Long basketId){
         Optional<Basket> basket=basketRepository.findBasketById(basketId);
-        Optional<User> user =userRepository.findByEmail(userEmail);
-        Long userId= 0L;
-        if(user.isPresent()){
-            userId=user.get().getId();
-        }else{
-            throw new BaseException(ErrorCode.USER_NOT_FOUND);
-        }
+
+
 
         if(basket.isPresent()){
-            int userTrash=trashRepository.UserBasketCount(userId,basketId);
+
             return BasketModelDto.builder()
                     .basketName(basket.get().getLocation3())
                     .id(basketId)
-                    .userTrash(userTrash)
+                    .detailAddress(basket.get().getDetailAddress())
                     .lat(basket.get().getLat())
                     .lng(basket.get().getLng())
                     .updatedAt(basket.get().getUpdatedAt())
@@ -114,6 +101,10 @@ public class BasketService {
         }
 
     }
+
+    // 인덱스 앞에 explain 써놓기
+
+    // abs(현재위도 경도-쓰레기통 위도 경도) order by로 (점과 점 사이의 거리) 위도,경도 index s
 
     public List<BasketModelDto> basketRecommend(BasketRecommendDto basketRecommendDto){
         Double lng= basketRecommendDto.getLng();
