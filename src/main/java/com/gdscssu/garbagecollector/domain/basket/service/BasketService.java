@@ -49,17 +49,8 @@ public class BasketService {
 
         //System.out.println(baskets.get(0).getLocation3());
         List<BasketModelDto> postBasketMarkingList=new ArrayList<>();
-        if(baskets.size()==0){
-            postBasketMarkingList.add(
-                    BasketModelDto.builder()
-                            .basketName("")
-                            .lng(0)
-                            .lat(0)
-                            .build());
 
-
-        }else{
-            for(Basket basket :baskets){
+        for(Basket basket :baskets){
                 Long basketId=basket.getId();
 
 
@@ -72,8 +63,9 @@ public class BasketService {
                                 .detailAddress(basket.getDetailAddress())
                                 .updatedAt(basket.getUpdatedAt())
                                 .build());
-            }
         }
+        System.out.println(baskets.get(0).getDetailAddress());
+
 
         return postBasketMarkingList;
     }

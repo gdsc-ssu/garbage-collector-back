@@ -38,6 +38,7 @@ public enum ErrorCode {
     BASKET_NOT_FOUND(HttpStatus.NOT_FOUND,404,"해당 쓰레기통이 데이터베이스에 존재하지 않습니다"),
 
 
+
     // GENERAL
     INVALID_HTTP_METHOD(METHOD_NOT_ALLOWED, 405, "잘못된 Http Method 요청입니다."),
     INVALID_VALUE(HttpStatus.BAD_REQUEST, 400, "잘못된 입력값입니다."),
