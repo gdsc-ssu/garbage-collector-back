@@ -18,16 +18,16 @@ public enum ErrorCode {
     // User
 
     // ==login==
-    TOKEN_NOT_EXIST(HttpStatus.UNAUTHORIZED, 403, "JWT Token이 존재하지 않습니다."),
-    INVALID_TOKEN(HttpStatus.UNAUTHORIZED,  403,"유효하지 않은 JWT Token 입니다."),
-    ACCESS_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED,  403,"만료된 Access Token 입니다."),
-    REFRESH_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED,  403,"만료된 Refresh Token 입니다."),
-    FAIL_AUTHENTICATION(HttpStatus.UNAUTHORIZED,  403,"사용자 인증에 실패하였습니다."),
+    TOKEN_NOT_EXIST(HttpStatus.UNAUTHORIZED, 401, "JWT Token이 존재하지 않습니다."),
+    INVALID_TOKEN(HttpStatus.UNAUTHORIZED,  401,"유효하지 않은 JWT Token 입니다."),
+    ACCESS_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED,  401,"만료된 Access Token 입니다."),
+    REFRESH_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED,  401,"만료된 Refresh Token 입니다."),
+    FAIL_AUTHENTICATION(HttpStatus.UNAUTHORIZED,  401,"사용자 인증에 실패하였습니다."),
 
     EMAIL_ALREADY_EXIST(HttpStatus.BAD_REQUEST, 500,"이미 존재하는 이메일입니다."),
 
     INVALID_KAKAO_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED,403,"유효하지 않은 Kakao Access Token입니다."),
-    UNAUTHORIZED(HttpStatus.UNAUTHORIZED,403,"인가되지 않은 사용자입니다."),
+    UNAUTHORIZED(HttpStatus.UNAUTHORIZED,401,"인가되지 않은 사용자입니다."),
 
     FAIL_LOGIN(INTERNAL_SERVER_ERROR,500,"로그인에 실패하였습니다"),
 

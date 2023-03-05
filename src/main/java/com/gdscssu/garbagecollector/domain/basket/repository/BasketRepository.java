@@ -16,13 +16,13 @@ import java.util.Optional;
 @EnableJpaRepositories
 public interface BasketRepository extends JpaRepository<Basket,Long> {
 
-    @Query(value = "select distinct * from Basket as b where b.lat>=:lat1 and b.lat<=:lat2 and b.lng>=:lng1 " +
+    @Query(value = "select  * from Basket as b where b.lat>=:lat1 and b.lat<=:lat2 and b.lng>=:lng1 " +
             "and b.lng<=:lng2 ",nativeQuery = true)
     List<Basket>findBasketByLngAndLat(@Param("lng1")Double lng1, @Param("lat1")Double lat1,
                                       @Param("lng2")Double lng2,@Param("lat2")Double lat2);
 
     Optional<Basket> findBasketById(Long id);
 
-    @Query(value = "select distinct * from Basket as b where ROUND(b.lng,2) like ROUND(:lng,2) and ROUND(b.lat,2) like ROUND(:lat,2) and b.type like :type",nativeQuery = true)
+    @Query(value = "select  * from Basket as b where ROUND(b.lng,2) like ROUND(:lng,2) and ROUND(b.lat,2) like ROUND(:lat,2) and b.type like :type",nativeQuery = true)
     List<Basket>basketRecommendList(@Param("lng")Double lng, @Param("lat")Double lat,@Param("type")String type);
 }
