@@ -10,6 +10,7 @@ import com.gdscssu.garbagecollector.global.config.OAuth.google.GoogleOAuth;
 import com.gdscssu.garbagecollector.global.config.OAuth.google.GoogleOAuthToken;
 import com.gdscssu.garbagecollector.global.config.OAuth.google.OAuthService;
 import com.gdscssu.garbagecollector.global.config.error.BaseResponse;
+import com.gdscssu.garbagecollector.global.config.error.ErrorCode;
 import com.gdscssu.garbagecollector.global.config.error.exception.BaseException;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtAuthenticationFilter;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtTokenProvider;

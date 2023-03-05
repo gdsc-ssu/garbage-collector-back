@@ -42,11 +42,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         request.getMethod();
         AntPathMatcher pathMatcher = new AntPathMatcher();
         return (
-                pathMatcher.match("/baskets", path) && request.getMethod().equals("POST") ||
-                pathMatcher.match("/user/auth2", path) && request.getMethod().equals("GET") ||
+                    pathMatcher.match("/baskets", path) && request.getMethod().equals("POST") ||
+                        pathMatcher.match("/user/auth2", path) && request.getMethod().equals("GET") ||
                         pathMatcher.match("/user/auth/access", path) && request.getMethod().equals("GET") ||
                         pathMatcher.match("/user/login",path) &&request.getMethod().equals("POST")||
-                pathMatcher.match("/baskets/{basketId}",path) &&request.getMethod().equals("GET")
+                        pathMatcher.match("/baskets/{basketId}",path) &&request.getMethod().equals("GET")||
+                        pathMatcher.match("/user/{userId}",path) &&request.getMethod().equals("GET")||
+                            pathMatcher.match("/basket/report",path) &&request.getMethod().equals("POST")||
+                            pathMatcher.match("/basket/recommend",path) &&request.getMethod().equals("POST")||
+                            pathMatcher.match("/baskets",path) &&request.getMethod().equals("POST")||
+                            pathMatcher.match("/rank/total",path) &&request.getMethod().equals("GET")
 
         );
     }
@@ -56,13 +61,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-
-        ErrorCode errorCode=null;
         String jwt = getJwtFromRequest(request); //request에서 jwt 토큰을 꺼낸다.
 
         if(jwt==null){
-            SecurityContextHolder.getContext().setAuthentication(null);
-            filterChain.doFilter(request, response);
+
+            sendErrorResponse(response,ErrorCode.TOKEN_NOT_EXIST);
         }
         else  {
             try{
@@ -104,7 +107,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 
-    private void sendErrorResponse(HttpServletResponse httpServletResponse, ErrorCode errorCode) throws IOException{
+    private void sendErrorResponse(HttpServletResponse httpServletResponse,ErrorCode errorCode) throws IOException{
 
 
         httpServletResponse.setCharacterEncoding("utf-8");

@@ -13,17 +13,17 @@ import java.util.List;
 @Repository
 @EnableJpaRepositories
 public interface ScoreRepository extends JpaRepository<Score, Long> {
-    @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.GetRankingResponseDTO(s.user.nickname, SUM(s.point)) " +
+    @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.GetRankingResponseDTO(s.user.id,s.user.nickname, s.user.profileImg,SUM(s.point)) " +
             "FROM Score s " +
             "GROUP BY s.user " +
             "ORDER BY SUM(s.point) DESC")
     List<GetRankingResponseDTO> getRankings();
 
-    @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.GetRankingResponseDTO(s.user.nickname, SUM(s.point))  from Score s order by sum(s.point) desc")
+    @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.GetRankingResponseDTO(s.user.id,s.user.nickname,s.user.profileImg, SUM(s.point))  from Score s order by sum(s.point) desc")
     List<GetRankingResponseDTO> getRankingsV2();
 
 
-    @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.GetRankingResponseDTO(s.user.nickname, SUM(s.point)) " +
+    @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.GetRankingResponseDTO(s.user.id,s.user.nickname,s.user.profileImg, SUM(s.point)) " +
             "FROM Score s " +
             "WHERE s.basket.location.code = :locationCode " +
             "GROUP BY s.user " +

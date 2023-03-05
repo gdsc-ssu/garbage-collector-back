@@ -3,9 +3,11 @@ package com.gdscssu.garbagecollector.global.config.error;
 
 import com.gdscssu.garbagecollector.global.config.error.exception.BaseException;
 import com.gdscssu.garbagecollector.global.config.error.exception.JwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -37,6 +39,22 @@ public class GlobalExceptionHandler {
                 .status(e.getJwtErrorCode().getHttpStatus())
                 .body(new BaseResponse<>(e));
     }
+    //jwtException
+    @ExceptionHandler(MalformedJwtException.class)
+    public ResponseEntity<BaseResponse> jwtException(MalformedJwtException e, HttpServletRequest request) {
+        System.out.println("jwt error");
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(new BaseResponse<>(INVALID_TOKEN));
+    }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<BaseResponse> illgealArgumentException(IllegalArgumentException e, HttpServletRequest request) {
+        System.out.println("jwt error");
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(new BaseResponse<>(TOKEN_NOT_EXIST));
+    }
+
 
     // Not Support Http Method Exception
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
