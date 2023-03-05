@@ -45,15 +45,10 @@ public class BasketService {
 
         List<Basket> baskets= basketRepository.findBasketByLngAndLat(lng1,lat1,lng2,lat2);
 
-
-
-        //System.out.println(baskets.get(0).getLocation3());
         List<BasketModelDto> postBasketMarkingList=new ArrayList<>();
 
         for(Basket basket :baskets){
                 Long basketId=basket.getId();
-
-
                 postBasketMarkingList.add(
                         BasketModelDto.builder()
                                 .id(basket.getId())
@@ -64,7 +59,7 @@ public class BasketService {
                                 .updatedAt(basket.getUpdatedAt())
                                 .build());
         }
-        System.out.println(baskets.get(0).getDetailAddress());
+
 
 
         return postBasketMarkingList;
