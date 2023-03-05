@@ -19,6 +19,9 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
             "ORDER BY SUM(s.point) DESC")
     List<GetRankingResponseDTO> getRankings();
 
+    @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.GetRankingResponseDTO(s.user.nickname, SUM(s.point))  from Score s order by sum(s.point) desc")
+    List<GetRankingResponseDTO> getRankingsV2();
+
 
     @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.GetRankingResponseDTO(s.user.nickname, SUM(s.point)) " +
             "FROM Score s " +
