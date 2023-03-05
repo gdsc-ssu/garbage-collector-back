@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder(access = AccessLevel.PUBLIC)
 public class GetRankingResponseDTO {
-    private final Long userId;
+    private final Long id;
     private final String nickname;
 
     private final String profileImg;
