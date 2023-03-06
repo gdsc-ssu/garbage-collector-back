@@ -14,9 +14,10 @@ import java.util.List;
 @EnableJpaRepositories
 public interface ScoreRepository extends JpaRepository<Score, Long> {
     @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.GetRankingResponseDTO(s.user.id,s.user.nickname, s.user.profileImg,SUM(s.point)) " +
-            "FROM Score s " +
-            "GROUP BY s.user " +
-            "ORDER BY SUM(s.point) DESC")
+            "FROM Score s  join User as u on s.user.id=u.id "+
+            "GROUP BY u.id " +
+            "ORDER BY SUM(s.point) DESC , u.nickname "
+            )
     List<GetRankingResponseDTO> getRankings();
 
     @Query("SELECT new com.gdscssu.garbagecollector.domain.score.dto.GetRankingResponseDTO(s.user.id,s.user.nickname,s.user.profileImg, SUM(s.point))  from Score s order by sum(s.point) desc")

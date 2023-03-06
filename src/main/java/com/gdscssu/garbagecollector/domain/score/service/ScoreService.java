@@ -28,7 +28,7 @@ public class ScoreService {
 
     // TODO: pagination 적용하고 DTO 멤버에 rank 추가하기
     public List<GetRankingResponseDTO> getTotalRanking() {
-        return scoreRepository.getRankingsV2();
+        return scoreRepository.getRankings();
     }
 
     public List<GetRankingResponseDTO> getRegionRanking(String locationCode) {
