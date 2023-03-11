@@ -15,6 +15,8 @@ public class UserModelDto {
     private String nickname;
 
     private String email;
+
+    private String accessToken;
     private int general;
     private int plastic;
     private int can;

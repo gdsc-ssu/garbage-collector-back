@@ -33,7 +33,7 @@ public class TrashService {
 
 
 
-    public UserModelDto userDump(PostUserDumpReq postUserDumpReq, String email){
+    public UserModelDto userDump(PostUserDumpReq postUserDumpReq, String email,String jwt){
         TrashType1 trashType1= TrashType1.valueOf(postUserDumpReq.getTrashType1());
         TrashType2 trashType2= TrashType2.valueOf(postUserDumpReq.getTrashType2());
         Optional<Basket> basket=basketRepository.findBasketById(postUserDumpReq.getBasketId());
@@ -71,6 +71,7 @@ public class TrashService {
                 .nickname(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getNickname())
                 .profileUrl(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getProfileImg())
                 .can(can)
+                .accessToken(jwt)
                 .general(general)
                 .plastic(plastic)
                 .glass(glass)

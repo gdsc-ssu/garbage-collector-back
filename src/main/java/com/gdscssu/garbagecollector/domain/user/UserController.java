@@ -81,7 +81,7 @@ public class UserController {
     public ResponseEntity<BaseResponse<UserModelDto>>getUserInfoByAccessToken(HttpServletRequest request){
         String jwtToken=jwtAuthenticationFilter.getJwtFromRequest(request);
         String userEmail=jwtTokenProvider.getUserEmailFromJWT(jwtToken);
-        UserModelDto userModelDto=userService.getUserInfoByAccessToken(userEmail);
+        UserModelDto userModelDto=userService.getUserInfoByAccessToken(userEmail,jwtToken);
         return ResponseEntity.ok(new BaseResponse<>(userModelDto));
     }
 

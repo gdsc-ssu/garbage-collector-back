@@ -121,7 +121,7 @@ public class UserService {
 
     }
 
-    public UserModelDto getUserInfoByAccessToken(String email){
+    public UserModelDto getUserInfoByAccessToken(String email,String jwtToken){
         Optional<User>user=userRepository.findByEmail(email);
         int can= trashRepository.findCanCount(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getId());
         int general=trashRepository.findGeneralCount(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getId());
@@ -135,6 +135,7 @@ public class UserService {
                 .nickname(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getNickname())
                 .profileUrl(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getProfileImg())
                 .can(can)
+                .accessToken(jwtToken)
                 .general(general)
                 .plastic(plastic)
                 .glass(glass)

@@ -31,7 +31,7 @@ public class TrashController {
     public ResponseEntity<BaseResponse<UserModelDto>> userDump(@RequestBody PostUserDumpReq postUserDumpReq, HttpServletRequest httpServletRequest){
         String jwt=jwtAuthenticationFilter.getJwtFromRequest(httpServletRequest);
         String email=jwtTokenProvider.getUserEmailFromJWT(jwt);
-        UserModelDto userModelDto=trashService.userDump(postUserDumpReq,email);
+        UserModelDto userModelDto=trashService.userDump(postUserDumpReq,email,jwt);
 
         return ResponseEntity.ok(new BaseResponse<>(userModelDto));
     }
