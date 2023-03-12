@@ -10,6 +10,7 @@ import com.gdscssu.garbagecollector.domain.basket.service.BasketService;
 import com.gdscssu.garbagecollector.global.config.error.BaseResponse;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtAuthenticationFilter;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtTokenProvider;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ public class BasketController {
 
     // [MAP] /baskets
     // 유저의 위도 경도를 받아와서 소수점 다섯번째자리까지 똑같은 데이터를 찾아서 반환해줌
+    @ApiOperation(value = "Body 내 lat1,lng1와 lat2,lng2 사이 쓰레기통 데이터들")
     @PostMapping("/baskets")
     public ResponseEntity<BaseResponse<List<BasketModelDto>>> homeBasketMarking(@RequestBody PostBasketMarkingReq postBasketMarkingReq){
 
@@ -43,7 +45,7 @@ public class BasketController {
         return ResponseEntity.ok(new BaseResponse<>(postBasketMarkingResList));
 
     }
-
+    @ApiOperation(value = "특정 쓰레기통 상세 데이터")
     @GetMapping("/baskets/{basketId}")
     public ResponseEntity<BaseResponse<BasketModelDto>> homeBasketDetail(@PathVariable("basketId")Long basketID){
 
@@ -52,7 +54,7 @@ public class BasketController {
         return ResponseEntity.ok(new BaseResponse<>(basketModelDto));
 
     }
-
+    @ApiOperation(value = "쓰레기통 신고하기")
     @PostMapping("/basket/report")
     public ResponseEntity<BaseResponse<Long>> basketReport(@RequestBody BasketReportDto basketReportDto){
 
@@ -62,7 +64,7 @@ public class BasketController {
         return ResponseEntity.ok(new BaseResponse<>(id));
 
     }
-
+    @ApiOperation(value = "유저 주위 쓰레기통 추천")
     @PostMapping("/basket/recommend")
     public ResponseEntity<BaseResponse<List<BasketModelDto>>> basketRecommend(@RequestBody BasketRecommendDto basketRecommendDto){
 

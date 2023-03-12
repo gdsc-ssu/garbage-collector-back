@@ -6,6 +6,7 @@ import com.gdscssu.garbagecollector.domain.user.dto.UserModelDto;
 import com.gdscssu.garbagecollector.global.config.error.BaseResponse;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtAuthenticationFilter;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtTokenProvider;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,7 @@ public class TrashController {
         this.trashService = trashService;
     }
     // 쓰레기 버리기
-
+    @ApiOperation(value = "쓰레기 버리기")
     @PostMapping("/trash")
     public ResponseEntity<BaseResponse<UserModelDto>> userDump(@RequestBody PostUserDumpReq postUserDumpReq, HttpServletRequest httpServletRequest){
         String jwt=jwtAuthenticationFilter.getJwtFromRequest(httpServletRequest);

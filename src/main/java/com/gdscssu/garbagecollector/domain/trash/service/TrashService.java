@@ -71,6 +71,8 @@ public class TrashService {
                 .nickname(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getNickname())
                 .profileUrl(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getProfileImg())
                 .can(can)
+                .createdAt(user.orElseThrow().getCreatedAt())
+                .updatedAt(user.orElseThrow().getUpdatedAt())
                 .accessToken(jwt)
                 .general(general)
                 .plastic(plastic)

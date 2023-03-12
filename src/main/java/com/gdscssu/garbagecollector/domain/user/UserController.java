@@ -15,6 +15,7 @@ import com.gdscssu.garbagecollector.global.config.error.exception.BaseException;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtAuthenticationFilter;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtTokenProvider;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +58,7 @@ public class UserController {
     }
 
     //구글 로그인
-
+    @ApiOperation(value = "구글 로그인")
 
     @PostMapping("/login")
     public ResponseEntity<BaseResponse<PostLoginRes>> login(@RequestBody PostLoginReq postLoginReq) throws ParseException {
@@ -69,7 +70,7 @@ public class UserController {
 
 
     }
-
+    @ApiOperation(value = "유저 정보 불러오기")
     @GetMapping("/{userId}")
     public ResponseEntity<BaseResponse<UserModelDto>>getUserInfo(@PathVariable("userId")Long userId){
         UserModelDto userModelDto=userService.getUserInfo(userId);
@@ -77,6 +78,7 @@ public class UserController {
     }
 
     // 헤더에 accessToken으로 유저정보 추출
+    @ApiOperation(value = "헤더의 accessToken으로 유저정보 조회")
     @GetMapping("/auth")
     public ResponseEntity<BaseResponse<UserModelDto>>getUserInfoByAccessToken(HttpServletRequest request){
         String jwtToken=jwtAuthenticationFilter.getJwtFromRequest(request);
