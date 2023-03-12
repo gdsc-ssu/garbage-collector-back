@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class UserModelDto {
 
     private Long id;
-    private String profileUrl;
+    private String profileImg;
     private String nickname;
 
     private String email;
