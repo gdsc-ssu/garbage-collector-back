@@ -5,6 +5,8 @@ import com.gdscssu.garbagecollector.domain.basket.repository.BasketRepository;
 import com.gdscssu.garbagecollector.domain.collection.entity.Collection;
 import com.gdscssu.garbagecollector.domain.collection.entity.CollectionType;
 import com.gdscssu.garbagecollector.domain.collection.repository.CollectionRepository;
+import com.gdscssu.garbagecollector.domain.score.entity.Score;
+import com.gdscssu.garbagecollector.domain.score.repository.ScoreRepository;
 import com.gdscssu.garbagecollector.domain.trash.entity.Trash;
 import com.gdscssu.garbagecollector.domain.trash.entity.TrashType1;
 import com.gdscssu.garbagecollector.domain.trash.entity.TrashType2;
@@ -26,6 +28,7 @@ public class TrashService {
 
     private final BasketRepository basketRepository;
     private final UserRepository userRepository;
+    private final ScoreRepository scoreRepository;
 
     private final TrashRepository trashRepository;
 
@@ -39,6 +42,19 @@ public class TrashService {
         Optional<Basket> basket=basketRepository.findBasketById(postUserDumpReq.getBasketId());
         Optional<User> user=userRepository.findByEmail(email);
         System.out.println(trashType1.name());
+        int exp=0;
+        if(trashType2.equals(TrashType2.GENERAL)){
+            exp=20;
+
+        }else if(trashType2.equals(TrashType2.PAPER)){
+            exp=30;
+        }else if(trashType2.equals(TrashType2.CAN)){
+            exp=35;
+        }else if(trashType2.equals(TrashType2.GLASS)){
+            exp=40;
+        }else if(trashType2.equals(TrashType2.PLASTIC)){
+            exp=40;
+        }
 
 
 
@@ -57,6 +73,12 @@ public class TrashService {
                 .collection(collection)
                 .build();
         trashRepository.save(trash);
+
+        // Score에 반영
+        Score score = new Score(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")), basket.orElseThrow(()->
+                new RuntimeException("쓰레기통이 존재하지 않습니다")), collection, collection.getExp());
+
+        Score saved = scoreRepository.save(score);
 
         int can= trashRepository.findCanCount(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getId());
         int general=trashRepository.findGeneralCount(user.orElseThrow(()->new RuntimeException("유저가 존재하지 않습니다.")).getId());

@@ -15,6 +15,7 @@ import com.gdscssu.garbagecollector.global.config.error.exception.BaseException;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtAuthenticationFilter;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtTokenProvider;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
+@Api(tags = "유저 API")
 public class UserController {
 
 

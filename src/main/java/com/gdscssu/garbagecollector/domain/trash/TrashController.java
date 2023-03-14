@@ -6,6 +6,7 @@ import com.gdscssu.garbagecollector.domain.user.dto.UserModelDto;
 import com.gdscssu.garbagecollector.global.config.error.BaseResponse;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtAuthenticationFilter;
 import com.gdscssu.garbagecollector.global.config.security.jwt.JwtTokenProvider;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-
+@Api(tags = "쓰레기 버리기 API")
 @RestController
 public class TrashController {
     private final JwtTokenProvider jwtTokenProvider;

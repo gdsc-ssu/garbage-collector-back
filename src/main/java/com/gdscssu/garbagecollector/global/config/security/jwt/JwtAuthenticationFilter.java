@@ -51,9 +51,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                             pathMatcher.match("/basket/report",path) &&request.getMethod().equals("POST")||
                             pathMatcher.match("/basket/recommend",path) &&request.getMethod().equals("POST")||
                             pathMatcher.match("/baskets",path) &&request.getMethod().equals("POST")||
-                            pathMatcher.match("/rank/total",path) &&request.getMethod().equals("GET")
+                            pathMatcher.match("/rank/total",path) &&request.getMethod().equals("GET")||
+                            pathMatcher.match("/swagger-ui/**",path) &&request.getMethod().equals("GET")||
+                            pathMatcher.match("/v3/api-docs", path)&&request.getMethod().equals("GET")||
+                            pathMatcher.match("/swagger-resources/**", path));
 
-        );
+
     }
 
 

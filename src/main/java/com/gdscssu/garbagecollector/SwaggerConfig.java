@@ -18,76 +18,46 @@ import springfox.documentation.swagger.web.DocExpansion;
 import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger.web.UiConfigurationBuilder;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-@EnableWebMvc
-public class SwaggerConfig implements WebMvcConfigurer {
-
-    private static final String API_TITLE = "GarbageCollector API";
-    private static final String API_DESCRIPTION = "GarbageCollector API Document";
-    private static final String API_VERSION = "Version 1";
-    private static final String SWAGGER_PATH = "/swagger-ui/index.html";
-    private static final String API_KEY_NAME = "JWT AccessToken";
-    private static final String SCOPE_GLOBAL = "global";
-    private static final String SCOPE_GLOBAL_DESCRIPTION = "to access resources";
-
-    private ApiInfo getApiInfo() {
-        return new ApiInfoBuilder()
-                .title(API_TITLE)
-                .description(API_DESCRIPTION)
-                .version(API_VERSION)
-                .build();
-    }
+public class SwaggerConfig {
 
     @Bean
-    public UiConfiguration uiConfiguration() {
-        return UiConfigurationBuilder.builder()
-                .docExpansion(DocExpansion.LIST)
-                .build();
-    }
-
-    @Bean
-    public Docket docket() {
+    public Docket api() {
         return new Docket(DocumentationType.OAS_30)
-                .apiInfo(getApiInfo())
-                .securityContexts(List.of(getSecurityContext()))
-                .securitySchemes(List.of(getScheme()))
+                .securityContexts(Arrays.asList(securityContext()))
+                .securitySchemes(Arrays.asList(apiKey()))
+                .useDefaultResponseMessages(false)
                 .select()
-                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
+                .apis(RequestHandlerSelectors.basePackage("com.gdscssu.garbagecollector.domain"))
                 .paths(PathSelectors.any())
+                .build()
+                .apiInfo(apiInfo());
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Garbage Collection API")
+                .description("Garbage Collection API입니다!")
+                .version("1.0")
                 .build();
     }
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addRedirectViewController("/docs", SWAGGER_PATH);
-        registry.addRedirectViewController("/swagger-ui", SWAGGER_PATH);
-    }
-
-    private SecurityScheme getScheme() {
-        return HttpAuthenticationScheme
-                .JWT_BEARER_BUILDER
-                .name(API_KEY_NAME)
-                .description("`eyJhbGciOiJIUzUxMiJ9.xxxxxxxxxxxx` 입력.  <br><br>(**`Bearer` 필요없음**)")
-                .build();
-    }
-
-    private SecurityContext getSecurityContext() {
+    private SecurityContext securityContext() {
         return SecurityContext.builder()
-                .securityReferences(getSecurityReferences())
+                .securityReferences(defaultAuth())
                 .build();
     }
 
-    private List<SecurityReference> getSecurityReferences() {
-        return List.of(new SecurityReference(API_KEY_NAME, getAuthorizationScopes()));
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
     }
 
-    private AuthorizationScope[] getAuthorizationScopes() {
-        AuthorizationScope globalScope = new AuthorizationScopeBuilder()
-                .scope(SCOPE_GLOBAL)
-                .description(SCOPE_GLOBAL_DESCRIPTION)
-                .build();
-        return new AuthorizationScope[]{globalScope};
+    private ApiKey apiKey() {
+        return new ApiKey("Authorization", "Authorization", "header");
     }
 }
