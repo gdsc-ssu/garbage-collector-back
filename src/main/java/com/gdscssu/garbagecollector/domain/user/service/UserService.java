@@ -47,13 +47,14 @@ public class UserService {
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(res.getBody());
         String id= (String) jsonObject.get("id");
+        String name=(String) jsonObject.get("name");
 
         if(googleOAuth.validateGoogleAccessToken(postLoginReq.getAccessToken()).equals(id)){
             if(userRepository.findByEmail(postLoginReq.getEmail()).isEmpty()){
 
                 User user = User.builder().
                         email(postLoginReq.getEmail())
-                        .nickname(postLoginReq.getNickName())
+                        .nickname(name)
                         .profileImg(postLoginReq.getProfileImg())
                         .build();
 
